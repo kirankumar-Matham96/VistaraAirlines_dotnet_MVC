@@ -1,0 +1,24 @@
+﻿# Build results
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# NuGet
+packages/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IIS Express
+.vs/config/
+
+# Environment files
+.env
