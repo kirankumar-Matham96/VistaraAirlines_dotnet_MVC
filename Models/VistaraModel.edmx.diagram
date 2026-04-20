@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5ec1f15974e44cd58f42fa942a658aba" Name="Diagram1">
+        <EntityTypeShape EntityType="VISTARA_DBModel.Booking" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VISTARA_DBModel.Cancellation" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VISTARA_DBModel.Flight" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VISTARA_DBModel.FlightInventory" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VISTARA_DBModel.PassengerDetail" Width="1.5" PointX="5.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VISTARA_DBModel.User" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="VISTARA_DBModel.FK__Booking__FlightI__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="VISTARA_DBModel.FK__Cancellat__Booki__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="VISTARA_DBModel.FK__Passenger__Booki__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="VISTARA_DBModel.FK__Passenger__Fligh__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="VISTARA_DBModel.FK_FlightInventory_Flight" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
