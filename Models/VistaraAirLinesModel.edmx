@@ -85,7 +85,9 @@
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="PasswordHash" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Role" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="CreatedAt" Type="datetime" />
@@ -274,7 +276,9 @@
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PasswordHash" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Role" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
@@ -340,7 +344,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="VISTARA_DBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="VISTARA_DBEntities4" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Bookings" EntityType="Self.Booking" />
           <EntitySet Name="Cancellations" EntityType="Self.Cancellation" />
           <EntitySet Name="Flights" EntityType="Self.Flight" />
@@ -373,7 +377,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="VISTARA_DBModelStoreContainer" CdmEntityContainer="VISTARA_DBEntities">
+        <EntityContainerMapping StorageEntityContainer="VISTARA_DBModelStoreContainer" CdmEntityContainer="VISTARA_DBEntities4">
           <EntitySetMapping Name="Bookings">
             <EntityTypeMapping TypeName="VISTARA_DBModel.Booking">
               <MappingFragment StoreEntitySet="Booking">
@@ -458,7 +462,9 @@
             <EntityTypeMapping TypeName="VISTARA_DBModel.User">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />

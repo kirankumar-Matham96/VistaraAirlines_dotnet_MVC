@@ -13,10 +13,10 @@ namespace VistaraAirLinesApp.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class VISTARA_DBEntities : DbContext
+    public partial class VISTARA_DBEntities4 : DbContext
     {
-        public VISTARA_DBEntities()
-            : base("name=VISTARA_DBEntities")
+        public VISTARA_DBEntities4()
+            : base("name=VISTARA_DBEntities4")
         {
         }
     

@@ -1,25 +1,79 @@
-﻿@using VistaraAirLinesApp.Models.ViewModels;
+﻿@model VistaraAirLinesApp.Models.ViewModels.UserViewModel
 
 @{
     ViewBag.Title = "Register User";
 }
 
-<div class="container">
+<div class="container d-flex flex-column align-items-center">
     <h2>Register User</h2>
 
-    @using (Html.BeginForm())
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "card p-5" }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="row mb-3">
+            @Html.LabelFor(model => model.Firstname)
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.Firstname, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Firstname, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.Lastname)
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Lastname, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Lastname, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
             @Html.LabelFor(model => model.UserName)
             <div class="col-md-9">
-                @Html.EditorFor(model => model.UserName, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UserName, "", new {@class="text-danger"})
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.Email)
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.Password)
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.CPassword)
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.CPassword, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CPassword, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.Role)
+            <div class="col-md-9">
+                @Html.RadioButtonFor(model => model.Role, "MANAGER", new { htmlAttributes = new { @class = "form-control" } }) Manager
+                @Html.RadioButtonFor(model => model.Role, "EMPLOYEE", new { htmlAttributes = new { @class = "form-control" } }) Employee
+                @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-9">
+                <button type="submit" class="btn btn-primary">Register</button>
             </div>
         </div>
     }
-
 </div>
 

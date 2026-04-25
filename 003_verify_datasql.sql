@@ -1,0 +1,5 @@
+USE VISTARA_DB;
+
+SELECT * FROM Users;
+
+DELETE FROM Users WHERE UserId = 1;

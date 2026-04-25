@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net-Next, Version=4.1.0.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
+      <HintPath>packages\BCrypt.Net-Next.4.1.0\lib\net472\BCrypt.Net-Next.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -59,11 +62,24 @@
       <HintPath>packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.6.1\lib\net462\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SqlClient, Version=4.6.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Data.SqlClient.4.9.1\lib\net462\System.Data.SqlClient.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.6.3\lib\net462\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.6.1\lib\net462\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.1.2\lib\net462\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -129,38 +145,39 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Booking.cs">
-      <DependentUpon>VistaraModel.tt</DependentUpon>
+      <DependentUpon>VistaraAirLinesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Cancellation.cs">
-      <DependentUpon>VistaraModel.tt</DependentUpon>
+      <DependentUpon>VistaraAirLinesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Flight.cs">
-      <DependentUpon>VistaraModel.tt</DependentUpon>
+      <DependentUpon>VistaraAirLinesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FlightInventory.cs">
-      <DependentUpon>VistaraModel.tt</DependentUpon>
+      <DependentUpon>VistaraAirLinesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PassengerDetail.cs">
-      <DependentUpon>VistaraModel.tt</DependentUpon>
+      <DependentUpon>VistaraAirLinesModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
-      <DependentUpon>VistaraModel.tt</DependentUpon>
+      <DependentUpon>VistaraAirLinesModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\LoginViewModel.cs" />
     <Compile Include="Models\ViewModels\UserViewModel.cs" />
-    <Compile Include="Models\VistaraModel.Context.cs">
+    <Compile Include="Models\VistaraAirLinesModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>VistaraModel.Context.tt</DependentUpon>
+      <DependentUpon>VistaraAirLinesModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\VistaraModel.cs">
+    <Compile Include="Models\VistaraAirLinesModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>VistaraModel.tt</DependentUpon>
+      <DependentUpon>VistaraAirLinesModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\VistaraModel.Designer.cs">
+    <Compile Include="Models\VistaraAirLinesModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>VistaraModel.edmx</DependentUpon>
+      <DependentUpon>VistaraAirLinesModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -185,15 +202,15 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\VistaraModel.Context.tt">
+    <Content Include="Models\VistaraAirLinesModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>VistaraModel.edmx</DependentUpon>
-      <LastGenOutput>VistaraModel.Context.cs</LastGenOutput>
+      <DependentUpon>VistaraAirLinesModel.edmx</DependentUpon>
+      <LastGenOutput>VistaraAirLinesModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\VistaraModel.tt">
+    <Content Include="Models\VistaraAirLinesModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>VistaraModel.edmx</DependentUpon>
-      <LastGenOutput>VistaraModel.cs</LastGenOutput>
+      <DependentUpon>VistaraAirLinesModel.edmx</DependentUpon>
+      <LastGenOutput>VistaraAirLinesModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -201,12 +218,12 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\VistaraModel.edmx">
+    <EntityDeploy Include="Models\VistaraAirLinesModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>VistaraModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>VistaraAirLinesModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\VistaraModel.edmx.diagram">
-      <DependentUpon>VistaraModel.edmx</DependentUpon>
+    <Content Include="Models\VistaraAirLinesModel.edmx.diagram">
+      <DependentUpon>VistaraAirLinesModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
@@ -234,6 +251,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\User\RegisterUser.cshtml" />
+    <Content Include="Views\User\LoginUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
