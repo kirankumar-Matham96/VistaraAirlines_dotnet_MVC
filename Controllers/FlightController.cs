@@ -25,7 +25,6 @@ namespace VistaraAirLinesApp.Controllers
             TempData["SSRange"] = Enumerable.Range(0, 60).ToList();
         }
 
-        // GET: Flight
         public ActionResult AddFlight()
         {
             GetTimeRanges();
@@ -78,8 +77,9 @@ namespace VistaraAirLinesApp.Controllers
                     // Insert the details to the DB
                     db.FlightInventories.Add(flightInventoryData);
                     db.SaveChanges();
-
                     // Use transaction here to be safe side****
+
+                    return RedirectToAction("GetAllFlights");
                 }
 
                 GetTimeRanges();
@@ -87,9 +87,42 @@ namespace VistaraAirLinesApp.Controllers
             }
             catch (Exception ex)
             {
-                //ModelState.AddModelError("", "Something went wrong while adding flight");
                 ModelState.AddModelError("", ex.Message);
                 return View(flight);
+            }
+        }
+
+        public ActionResult GetAllFlights()
+        {
+            try
+            {
+                var flight = db.Flights.ToList();
+                ViewBag.Flight = flight;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                return View();
+            }
+        }
+
+        public ActionResult GetFlightDetails(int id)
+        {
+            try
+            {
+                var flight = db.Flights.Find(id);
+                var flightInventory = db.FlightInventories.FirstOrDefault(f => f.FlightId == id);
+
+                ViewBag.Flight = flight;
+                ViewBag.FlightInventory = flightInventory;
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                return View();
             }
         }
     }

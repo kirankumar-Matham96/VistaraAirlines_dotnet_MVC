@@ -255,6 +255,8 @@
     <Content Include="Views\User\RegisterUser.cshtml" />
     <Content Include="Views\User\LoginUser.cshtml" />
     <Content Include="Views\Flight\AddFlight.cshtml" />
+    <Content Include="Views\Flight\GetFlightDetails.cshtml" />
+    <Content Include="Views\Flight\GetAllFlights.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

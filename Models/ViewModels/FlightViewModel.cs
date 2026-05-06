@@ -27,7 +27,6 @@ namespace VistaraAirLinesApp.Models.ViewModels
         [DataType(DataType.Date)]
         public DateTime TravelDate { get; set; }
 
-        //public TimeSpan ArrivalTime { get; set; }
         [Required]
         public int ArrivalHrs { get; set; }
         [Required]
@@ -37,8 +36,6 @@ namespace VistaraAirLinesApp.Models.ViewModels
         [Required]
         public string ArrivalAmpm { get; set; }
 
-
-        //public TimeSpan DepartureTime { get; set; }
         [Required]
         public int DepartureHrs { get; set; }
         [Required]
@@ -50,26 +47,32 @@ namespace VistaraAirLinesApp.Models.ViewModels
 
         [Required]
         [Display(Name = "Executive Seats")]
+        [Range(0,int.MaxValue)]
         public int ExecutiveSeats { get; set; }
         
         [Required]
         [Display(Name = "Executive Fare")]
+        [Range(0,int.MaxValue)]
         public double ExecutiveFare { get; set; }
 
         [Required] 
         [Display(Name = "Business Seats")]
+        [Range(0,int.MaxValue)]
         public int BusinessSeats { get; set; }
 
         [Required] 
         [Display(Name = "Business Fare")]
+        [Range(0,int.MaxValue)]
         public double BusinessFare { get; set; }
 
         [Required] 
         [Display(Name = "Economy Seats")]
+        [Range(0, int.MaxValue)]
         public int EconomySeats { get; set; }
 
         [Required] 
         [Display(Name = "Economy Fare")]
+        [Range(0, int.MaxValue)]
         public double EconomyFare { get; set; }
     }
 }

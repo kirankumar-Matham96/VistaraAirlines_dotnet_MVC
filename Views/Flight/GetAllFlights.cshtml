@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "GetFlightDetails";
+}
+
+
+<duv class="container">
+    <div class="jumbotron">
+        <h2>Flight Details</h2>
+        <p>Details of the flight</p>
+    </div>
+    <div class="card">
+        <div class="card-body">
+
+            <table class="table align-baseline">
+
+                <tr>
+                    <th>Flight Id</th>
+                    <th>Flight Code</th>
+                    <th>Flight Name</th>
+                    <th>Arrival Time</th>
+                    <th>Departure Time</th>
+                    <th>Source</th>
+                    <th>Destination</th>
+                    <th></th>
+                </tr>
+
+                @foreach (var flight in @ViewBag.Flight)
+                {
+                    <tr>
+                        <td>@flight.FlightId</td>
+                        <td>@flight.FlightCode</td>
+                        <td>@flight.FlightName</td>
+                        <td>@flight.ArrivalTime</td>
+                        <td>@flight.DepartureTime</td>
+                        <td>@flight.Source</td>
+                        <td>@flight.Destination</td>
+                        <td>@Html.ActionLink("View Full Details", "GetFlightDetails", new { id = flight.FlightId }, new {@class="btn btn-outline-primary"})</td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</duv>
+
