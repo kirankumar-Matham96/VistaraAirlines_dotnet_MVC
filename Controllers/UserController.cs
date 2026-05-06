@@ -87,7 +87,12 @@ namespace VistaraAirLinesApp.Controllers
 
                         // store user id, user name, and role in the session here...
 
-                        return RedirectToAction("Index", "Home", new { area = "Home" }); // to redirect to method in another controller
+                        if (user.Role == "MANAGER") { 
+                            return RedirectToAction("AddFlight", "Flight"); 
+                        }
+
+                        return RedirectToAction("Index", "Home");
+
                     }
                     else {
                         ModelState.AddModelError("UserId", "Invalid UserId");
