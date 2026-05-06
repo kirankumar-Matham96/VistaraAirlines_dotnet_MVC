@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using VistaraAirLinesApp.Models;
 using VistaraAirLinesApp.Models.ViewModels;
@@ -45,6 +42,8 @@ namespace VistaraAirLinesApp.Controllers
 
                     db.Users.Add(newUser);
                     db.SaveChanges();
+
+                    return RedirectToAction("LoginUser");
                 }
 
                 return View(user);
@@ -86,7 +85,9 @@ namespace VistaraAirLinesApp.Controllers
                             return View(user);
                         }
 
-                        RedirectToAction("");
+                        // store user id, user name, and role in the session here...
+
+                        return RedirectToAction("Index", "Home", new { area = "Home" }); // to redirect to method in another controller
                     }
                     else {
                         ModelState.AddModelError("UserId", "Invalid UserId");

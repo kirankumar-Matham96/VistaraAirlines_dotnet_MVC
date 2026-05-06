@@ -139,6 +139,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\FlightController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -162,6 +163,7 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>VistaraAirLinesModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\FlightViewModel.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
     <Compile Include="Models\ViewModels\UserViewModel.cs" />
     <Compile Include="Models\VistaraAirLinesModel.Context.cs">
@@ -252,6 +254,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\User\RegisterUser.cshtml" />
     <Content Include="Views\User\LoginUser.cshtml" />
+    <Content Include="Views\Flight\AddFlight.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
