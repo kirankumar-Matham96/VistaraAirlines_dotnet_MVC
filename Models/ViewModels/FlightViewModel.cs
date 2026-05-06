@@ -22,26 +22,31 @@ namespace VistaraAirLinesApp.Models.ViewModels
         [Required] 
         public string Destination { get; set; }
 
+        [Required]
+        [Display(Name = "Travel Date")]
+        [DataType(DataType.Date)]
+        public DateTime TravelDate { get; set; }
+
         //public TimeSpan ArrivalTime { get; set; }
         [Required]
-        public TimeSpan ArrivalHrs { get; set; }
+        public int ArrivalHrs { get; set; }
         [Required]
-        public TimeSpan ArrivalMin { get; set; }
+        public int ArrivalMin { get; set; }
         [Required]
-        public TimeSpan ArrivalSec { get; set; }
+        public int ArrivalSec { get; set; }
         [Required]
-        public TimeSpan ArrivalAmpm { get; set; }
+        public string ArrivalAmpm { get; set; }
 
 
         //public TimeSpan DepartureTime { get; set; }
         [Required]
-        public TimeSpan DepartureHrs { get; set; }
+        public int DepartureHrs { get; set; }
         [Required]
-        public TimeSpan DepartureMin { get; set; }
+        public int DepartureMin { get; set; }
         [Required]
-        public TimeSpan DepartureSec { get; set; }
+        public int DepartureSec { get; set; }
         [Required]
-        public TimeSpan DepartureAmpm { get; set; }
+        public string DepartureAmpm { get; set; }
 
         [Required]
         [Display(Name = "Executive Seats")]

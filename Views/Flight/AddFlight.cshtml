@@ -45,6 +45,14 @@
         </div>
 
         <div class="row mb-3">
+            @Html.LabelFor(model => model.TravelDate)
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.TravelDate, new { AllowHtmlAttribute = new { @class = "form-control"} })
+                @Html.ValidationMessageFor(model => model.TravelDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
             @Html.Label("Arrival Time")
             <div class="col-md-9">
                 @* Hours *@
