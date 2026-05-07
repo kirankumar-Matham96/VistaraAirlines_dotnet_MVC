@@ -1,0 +1,143 @@
+﻿@model VistaraAirLinesApp.Models.ViewModels.FlightViewModel
+
+@{
+    ViewBag.Title = "UpdateFlightDetails";
+}
+
+<div>
+<h2>UpdateFlightDetails</h2>
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "card p-5" }))
+    {
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.FlightCode)
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.FlightCode, new { AllowHtmlAttribute = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FlightCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.FlightName)
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.FlightName, new { AllowHtmlAttribute = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FlightName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.Source)
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Source, new { AllowHtmlAttribute = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Source, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.Destination)
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Destination, new { AllowHtmlAttribute = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Destination, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.TravelDate)
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.TravelDate, new { AllowHtmlAttribute = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TravelDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            @Html.Label("Arrival Time")
+            <div class="col-md-9">
+                @* Hours *@
+                @Html.DropDownListFor(model => model.ArrivalHrs, new SelectList((IEnumerable<int>)TempData.Peek("HHRange")))
+
+                @* Minutes *@
+                @Html.DropDownListFor(model => model.ArrivalMin, new SelectList((IEnumerable<int>)TempData.Peek("MMRange")))
+
+                @* Seconds *@
+                @Html.DropDownListFor(model => model.ArrivalSec, new SelectList((IEnumerable<int>)TempData.Peek("SSRange")))
+
+                @* AM/PM *@
+                @Html.DropDownListFor(model => model.ArrivalAmpm, new SelectList(new[] { "AM", "PM" }))
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            @Html.Label("Departure Time")
+            <div class="col-md-9">
+                @* Hours *@
+                @Html.DropDownListFor(model => model.DepartureHrs, new SelectList((IEnumerable<int>)TempData.Peek("HHRange")))
+
+                @* Minutes *@
+                @Html.DropDownListFor(model => model.DepartureMin, new SelectList((IEnumerable<int>)TempData.Peek("MMRange")))
+
+                @* Seconds *@
+                @Html.DropDownListFor(model => model.DepartureSec, new SelectList((IEnumerable<int>)TempData.Peek("SSRange")))
+
+                @* AM/PM *@
+                @Html.DropDownListFor(model => model.DepartureAmpm, new SelectList(new[] { "AM", "PM" }))
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.ExecutiveSeats)
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.ExecutiveSeats, new { AllowHtmlAttribute = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ExecutiveSeats, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.ExecutiveFare)
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.ExecutiveFare, new { AllowHtmlAttribute = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ExecutiveFare, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.BusinessSeats)
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.BusinessSeats, new { AllowHtmlAttribute = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.BusinessSeats, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.BusinessFare)
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.BusinessFare, new { AllowHtmlAttribute = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.BusinessFare, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.EconomySeats)
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.EconomySeats, new { AllowHtmlAttribute = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EconomySeats, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.EconomyFare)
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.EconomyFare, new { AllowHtmlAttribute = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EconomyFare, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-9">
+                <button type="submit" class="btn btn-primary">Add Flight</button>
+            </div>
+        </div>
+    }
+</div>

@@ -96,27 +96,60 @@ namespace VistaraAirLinesApp.Controllers
         {
             try
             {
-                var flight = db.Flights.ToList();
-                ViewBag.Flight = flight;
-                return View();
+                var flight = db.Flights.Where(f => f.IsDeleted == false).ToList();
+                //ViewBag.Flight = flight;
+                return View(flight);
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("", ex.Message);
                 return View();
             }
+        }
+
+        public void GetFullFlightDetails(int id)
+        {
+            var flight = db.Flights.Find(id);
+            var flightInventory = db.FlightInventories.FirstOrDefault(f => f.FlightId == id);
+
+            //if (!TempData.Contains("flightData"))
+            //{
+            //}
+
+            var flightData = new FlightViewModel();
+
+            flightData.FlightCode = flight.FlightCode;
+            flightData.FlightName = flight.FlightName;
+            flightData.Source = flight.Source;
+            flightData.Destination = flight.Destination;
+            flightData.ArrivalHrs = flight.ArrivalTime.Hours > 12 ? flight.ArrivalTime.Hours - 12 : flight.ArrivalTime.Hours;
+            flightData.ArrivalMin = flight.ArrivalTime.Minutes;
+            flightData.ArrivalSec = flight.ArrivalTime.Seconds;
+            flightData.ArrivalAmpm = flight.ArrivalTime.Hours > 12 ? "PM" : "AM";
+            flightData.DepartureHrs = flight.DepartureTime.Hours > 12 ? flight.DepartureTime.Hours - 12 : flight.DepartureTime.Hours;
+            flightData.DepartureMin = flight.DepartureTime.Minutes;
+            flightData.DepartureSec = flight.DepartureTime.Seconds;
+            flightData.DepartureAmpm = flight.DepartureTime.Hours > 12 ? "PM" : "AM";
+
+            flightData.TravelDate = flightInventory.TravelDate;
+            flightData.ExecutiveSeats = flightInventory.ExecutiveSeats;
+            flightData.ExecutiveFare = (double)flightInventory.ExecutiveFare;
+            flightData.BusinessSeats = flightInventory.BusinessSeats;
+            flightData.BusinessFare = (double)flightInventory.BusinessFare;
+            flightData.EconomySeats = flightInventory.EconomySeats;
+            flightData.EconomyFare = (double)flightInventory.EconomyFare;
+
+            TempData["flightId"] = flight.FlightId;
+            TempData.Keep("flightId");
+            TempData["flightData"] = flightData;
+            TempData.Keep("flightData");
         }
 
         public ActionResult GetFlightDetails(int id)
         {
             try
             {
-                var flight = db.Flights.Find(id);
-                var flightInventory = db.FlightInventories.FirstOrDefault(f => f.FlightId == id);
-
-                ViewBag.Flight = flight;
-                ViewBag.FlightInventory = flightInventory;
-
+                GetFullFlightDetails(id);
                 return View();
             }
             catch (Exception ex)
@@ -125,5 +158,53 @@ namespace VistaraAirLinesApp.Controllers
                 return View();
             }
         }
+
+        // continue with the update and delete operations
+        public ActionResult UpdateFlightDetails(int id)
+        {
+            try
+            {
+                GetTimeRanges();
+                GetFullFlightDetails(id);
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                return View();
+            }
+        }
+        [HttpPost]
+        public ActionResult UpdateFlightDetails(FlightViewModel flight)
+        {
+            try
+            {
+                // update db here
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                return View();
+            }
+        }
+
+        public ActionResult DeleteFlight(int id)
+        {
+            try
+            {
+                var flight = db.Flights.Find(id);
+                flight.IsDeleted = true;
+                db.SaveChanges();
+
+                return RedirectToAction("GetAllFlights");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                return View();
+            }
+        }
+        
     }
 }

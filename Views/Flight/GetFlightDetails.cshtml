@@ -1,31 +1,40 @@
-﻿
+﻿@using VistaraAirLinesApp.Models.ViewModels
 @{
     ViewBag.Title = "GetFlightDetails";
+    var flight = @TempData["flightData"] as FlightViewModel;
 }
 
 
-<duv class="container">
+<div class="container">
     <h2>Flight Details</h2>
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <P class="fw-semibold col-6">Flight Id: @ViewBag.Flight.FlightId</P>
-                <p class="fw-semibold col-6">Flight Code: @ViewBag.Flight.FlightCode</p>
-                <p class="fw-semibold col-6">Flight Name: @ViewBag.Flight.FlightName</p>
-                <p class="fw-semibold col-6">Travel Date: @ViewBag.FlightInventory.TravelDate</p>
-                <p class="fw-semibold col-6">Arrival Time: @ViewBag.Flight.ArrivalTime</p>
-                <p class="fw-semibold col-6">Departure Time: @ViewBag.Flight.DepartureTime</p>
-                <p class="fw-semibold col-6">Source: @ViewBag.Flight.Source</p>
-                <p class="fw-semibold col-6">Destination: @ViewBag.Flight.Destination</p>
-                <p class="fw-semibold col-6">Executive Seats: @ViewBag.FlightInventory.ExecutiveSeats</p>
-                <p class="fw-semibold col-6">Executive Fare: @ViewBag.FlightInventory.ExecutiveFare</p>
-                <p class="fw-semibold col-6">Executive Seats: @ViewBag.FlightInventory.BusinessSeats</p>
-                <p class="fw-semibold col-6">Executive Fare: @ViewBag.FlightInventory.BusinessFare</p>
-                <p class="fw-semibold col-6">Executive Seats: @ViewBag.FlightInventory.EconomySeats</p>
-                <p class="fw-semibold col-6">Executive Fare: @ViewBag.FlightInventory.EconomyFare</p>
+                <P class="fw-semibold col-6">Flight Id: @TempData["flightId"]</P>
+                <p class="fw-semibold col-6">Flight Code: @flight.FlightCode</p>
+                <p class="fw-semibold col-6">Flight Name: @flight.FlightName</p>
+                <p class="fw-semibold col-6">Travel Date: @flight.TravelDate</p>
+                <p class="fw-semibold col-6">Arrival Time: @flight.ArrivalHrs:@flight.ArrivalMin:@flight.ArrivalSec @flight.ArrivalAmpm</p>
+                <p class="fw-semibold col-6">Departure Time: @flight.DepartureHrs:@flight.DepartureMin:@flight.DepartureSec @flight.DepartureAmpm</p>
+                <p class="fw-semibold col-6">Source: @flight.Source</p>
+                <p class="fw-semibold col-6">Destination: @flight.Destination</p>
+                <p class="fw-semibold col-6">Executive Seats: @flight.ExecutiveSeats</p>
+                <p class="fw-semibold col-6">Executive Fare: @flight.ExecutiveFare</p>
+                <p class="fw-semibold col-6">Executive Seats: @flight.BusinessSeats</p>
+                <p class="fw-semibold col-6">Executive Fare: @flight.BusinessFare</p>
+                <p class="fw-semibold col-6">Executive Seats: @flight.EconomySeats</p>
+                <p class="fw-semibold col-6">Executive Fare: @flight.EconomyFare</p>
             </div>
-            @Html.ActionLink("Back to flights list", "GetAllFlights", new { @class = "btn btn-outline-secondary" })
+            <div>
+                @Html.ActionLink("Back to flights list", "GetAllFlights", new { @class = "btn btn-outline-secondary" })
+            </div>
+            <div>
+                @Html.ActionLink("See Passengers List", "UnderImplementation", new { @class = "btn btn-primary" })
+            </div>
+            <div>
+                @Html.ActionLink("Update", "UpdateFlightDetails", new { @class = "btn btn-primary" })
+            </div>
         </div>
     </div>
-</duv>
+</div>
 

@@ -11,31 +11,30 @@
     </div>
     <div class="card">
         <div class="card-body">
-
             <table class="table align-baseline">
-
                 <tr>
                     <th>Flight Id</th>
                     <th>Flight Code</th>
                     <th>Flight Name</th>
+                    <th>Travel Date</th>
                     <th>Arrival Time</th>
                     <th>Departure Time</th>
                     <th>Source</th>
                     <th>Destination</th>
-                    <th></th>
                 </tr>
 
-                @foreach (var flight in @ViewBag.Flight)
+                @foreach (var flight in Model)
                 {
                     <tr>
                         <td>@flight.FlightId</td>
                         <td>@flight.FlightCode</td>
                         <td>@flight.FlightName</td>
+                        <td>@TempData["TravelDate"]</td>
                         <td>@flight.ArrivalTime</td>
                         <td>@flight.DepartureTime</td>
                         <td>@flight.Source</td>
                         <td>@flight.Destination</td>
-                        <td>@Html.ActionLink("View Full Details", "GetFlightDetails", new { id = flight.FlightId }, new {@class="btn btn-outline-primary"})</td>
+                        <td>@Html.ActionLink("View Full Details", "GetFlightDetails", new { id = @flight.FlightId }, new { @class = "btn btn-outline-primary" }) @Html.ActionLink("Update", "UpdateFlightDetails", new { id = @flight.FlightId }, new { @class = "btn btn-primary" }) @Html.ActionLink("Delete", "DeleteFlight", new { id = @flight.FlightId }, new { @class = "btn btn-dnager" })</td>
                     </tr>
                 }
 
