@@ -97,7 +97,6 @@ namespace VistaraAirLinesApp.Controllers
             try
             {
                 var flight = db.Flights.Where(f => f.IsDeleted == false).ToList();
-                //ViewBag.Flight = flight;
                 return View(flight);
             }
             catch (Exception ex)
@@ -111,10 +110,6 @@ namespace VistaraAirLinesApp.Controllers
         {
             var flight = db.Flights.Find(id);
             var flightInventory = db.FlightInventories.FirstOrDefault(f => f.FlightId == id);
-
-            //if (!TempData.Contains("flightData"))
-            //{
-            //}
 
             var flightData = new FlightViewModel();
 
@@ -166,7 +161,7 @@ namespace VistaraAirLinesApp.Controllers
             {
                 GetTimeRanges();
                 GetFullFlightDetails(id);
-                return View();
+                return View(TempData["flightData"]);
             }
             catch (Exception ex)
             {
@@ -179,8 +174,41 @@ namespace VistaraAirLinesApp.Controllers
         {
             try
             {
-                // update db here
-                return View();
+                if (ModelState.IsValid)
+                {
+                    // update db here
+                    int arrivalHrs = flight.ArrivalAmpm == "AM" ? flight.ArrivalHrs : flight.ArrivalHrs + 12;
+                    int departureHrs = flight.DepartureAmpm == "AM" ? flight.DepartureHrs : flight.DepartureHrs + 12;
+
+                    int flightId = Convert.ToInt32(TempData["flightId"].ToString());
+
+                    var flightToBeUpdated = db.Flights.Find(flightId);
+
+                    flightToBeUpdated.FlightCode = flight.FlightCode;
+                    flightToBeUpdated.FlightName = flight.FlightName;
+                    flightToBeUpdated.Source = flight.Source;
+                    flightToBeUpdated.Destination = flight.Destination;
+                    flightToBeUpdated.ArrivalTime = new TimeSpan(arrivalHrs, flight.ArrivalMin, flight.ArrivalSec);
+                    flightToBeUpdated.DepartureTime = new TimeSpan(departureHrs, flight.DepartureMin, flight.DepartureSec);
+                    flightToBeUpdated.IsDeleted = false;
+                    flightToBeUpdated.UpdatedAt = DateTime.Now;
+                    db.SaveChanges();
+
+                    var flightInventoryToBeUpdated = db.FlightInventories.FirstOrDefault(f => f.FlightId == flightId);
+
+                    flightInventoryToBeUpdated.TravelDate = flight.TravelDate;
+                    flightInventoryToBeUpdated.ExecutiveSeats = flight.ExecutiveSeats;
+                    flightInventoryToBeUpdated.ExecutiveFare = (Decimal)flight.ExecutiveFare;
+                    flightInventoryToBeUpdated.BusinessSeats = flight.BusinessSeats;
+                    flightInventoryToBeUpdated.BusinessFare = (Decimal)flight.BusinessFare;
+                    flightInventoryToBeUpdated.EconomySeats = flight.EconomySeats;
+                    flightInventoryToBeUpdated.EconomyFare = (Decimal)flight.EconomyFare;
+                    flightInventoryToBeUpdated.UpdatedAt = DateTime.Now;
+                    db.SaveChanges();
+
+                    return RedirectToAction("GetAllFlights");
+                }
+                return View(flight);
             }
             catch (Exception ex)
             {
@@ -205,6 +233,6 @@ namespace VistaraAirLinesApp.Controllers
                 return View();
             }
         }
-        
+
     }
 }
