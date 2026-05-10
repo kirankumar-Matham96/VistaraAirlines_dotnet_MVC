@@ -53,7 +53,7 @@ namespace VistaraAirLinesApp.Models.ViewModels
         [Required]
         [Display(Name = "Executive Fare")]
         [Range(0,int.MaxValue)]
-        public double ExecutiveFare { get; set; }
+        public decimal ExecutiveFare { get; set; }
 
         [Required] 
         [Display(Name = "Business Seats")]
@@ -63,7 +63,7 @@ namespace VistaraAirLinesApp.Models.ViewModels
         [Required] 
         [Display(Name = "Business Fare")]
         [Range(0,int.MaxValue)]
-        public double BusinessFare { get; set; }
+        public decimal BusinessFare { get; set; }
 
         [Required] 
         [Display(Name = "Economy Seats")]
@@ -73,6 +73,6 @@ namespace VistaraAirLinesApp.Models.ViewModels
         [Required] 
         [Display(Name = "Economy Fare")]
         [Range(0, int.MaxValue)]
-        public double EconomyFare { get; set; }
+        public decimal EconomyFare { get; set; }
     }
 }

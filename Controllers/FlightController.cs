@@ -128,11 +128,11 @@ namespace VistaraAirLinesApp.Controllers
 
             flightData.TravelDate = flightInventory.TravelDate;
             flightData.ExecutiveSeats = flightInventory.ExecutiveSeats;
-            flightData.ExecutiveFare = (double)flightInventory.ExecutiveFare;
+            flightData.ExecutiveFare = flightInventory.ExecutiveFare;
             flightData.BusinessSeats = flightInventory.BusinessSeats;
-            flightData.BusinessFare = (double)flightInventory.BusinessFare;
+            flightData.BusinessFare = flightInventory.BusinessFare;
             flightData.EconomySeats = flightInventory.EconomySeats;
-            flightData.EconomyFare = (double)flightInventory.EconomyFare;
+            flightData.EconomyFare = flightInventory.EconomyFare;
 
             TempData["flightId"] = flight.FlightId;
             TempData.Keep("flightId");

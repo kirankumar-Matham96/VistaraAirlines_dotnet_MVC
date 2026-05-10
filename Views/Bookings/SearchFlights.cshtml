@@ -1,0 +1,99 @@
+﻿@model VistaraAirLinesApp.Models.ViewModels.FlightSearchViewModel
+
+@{
+    ViewBag.Title = "SearchFlights";
+}
+
+<div class="container">
+
+    <h2>SearchFlights</h2>
+
+    @using (@Html.BeginForm("SearchFlights", "Bookings", FormMethod.Post, new { @class = "form" }))
+    {
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Source)
+
+            @Html.DropDownListFor(model => model.Source, new SelectList(Model.Sources))
+
+            @Html.ValidationMessageFor(model => model.Source)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Destination)
+
+            @Html.DropDownListFor(model => model.Destination, new SelectList(Model.Destinations))
+
+            @Html.ValidationMessageFor(model => model.Destination)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TravelDate)
+
+            @Html.DropDownListFor(model => model.TravelDate, new SelectList(Model.TravelDates))
+
+            @Html.ValidationMessageFor(model => model.TravelDate)
+        </div>
+
+        <div class="form-group">
+            <button type="submit">Search Flights</button>
+        </div>
+    }
+
+    @if (Model.FlightsList != null && Model.FlightsList.Any())
+    {
+        <table class="table">
+            <tr>
+                <th>FlightCode</th>
+                <th>FlightName</th>
+                <th>Source</th>
+                <th>Destination</th>
+
+                <th>Arrival Time</th>
+
+                <th>Departure Time</th>
+
+                <th>ExecutiveSeats</th>
+                <th>ExecutiveFare</th>
+                <th>BusinessSeats</th>
+                <th>BusinessFare</th>
+                <th>EconomySeats</th>
+                <th>EconomyFare</th>
+            </tr>
+            @foreach (var flight in Model.FlightsList)
+            {
+                <tr>
+                    <td>@flight.FlightCode</td>
+                    <td>@flight.FlightName</td>
+                    <td>@flight.Source</td>
+                    <td>@flight.Destination</td>
+
+                    <td>@flight.ArrivalHrs:@flight.ArrivalMin:@flight.ArrivalSec @flight.ArrivalAmpm</td>
+
+                    <td>@flight.DepartureHrs:@flight.DepartureMin:@flight.DepartureSec @flight.DepartureAmpm</td>
+
+                    <td>@flight.ExecutiveSeats</td>
+                    <td>@flight.ExecutiveFare</td>
+
+                    <td>@flight.BusinessSeats</td>
+                    <td>@flight.BusinessFare</td>
+
+                    <td>@flight.EconomySeats</td>
+                    <td>@flight.EconomyFare</td>
+
+                    <td>
+                        @Html.ActionLink(
+                            "Book Now",
+                            "AddBooking",
+                            "Bookings",
+                            new { id = flight.FlightCode },
+                            new { @class = "btn btn-primary" }
+                        )
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+</div>
+
+

@@ -1,0 +1,48 @@
+﻿@model VistaraAirLinesApp.Models.ViewModels.BookingsViewModel
+
+@{
+    ViewBag.Title = "AddBooking";
+}
+
+<div class="container">
+
+    <h2>AddBooking</h2>
+
+    @using (Html.BeginForm("AddBooking", "Bookings", FormMethod.Post, new { @class = "form" }))
+    {
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.BookingId)
+            @Html.EditorFor(model => model.BookingId)
+            @Html.ValidationMessageFor(model => model.BookingId)
+        </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FlightId)
+            @Html.EditorFor(model => model.FlightId)
+            @Html.ValidationMessageFor(model => model.FlightId)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TravelDate)
+            @Html.EditorFor(model => model.TravelDate)
+            @Html.ValidationMessageFor(model => model.TravelDate)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TotalFare)
+            @Html.EditorFor(model => model.TotalFare)
+            @Html.ValidationMessageFor(model => model.TotalFare)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BookingStatus)
+            @Html.EditorFor(model => model.BookingStatus)
+            @Html.ValidationMessageFor(model => model.BookingStatus)
+        </div>
+
+        <div class="form-group">
+            <buton type="submit" class="btn btn-primary">Book</buton>
+        </div>
+    }
+
+</div>
