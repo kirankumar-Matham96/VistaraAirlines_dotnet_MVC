@@ -88,7 +88,7 @@ namespace VistaraAirLinesApp.Controllers
                         // store user id, user name, and role in the session here...
 
                         if (user.Role == "MANAGER") { 
-                            return RedirectToAction("AddFlight", "Flight"); 
+                            return RedirectToAction("GetAllFlights", "Flight"); 
                         }
 
                         return RedirectToAction("Index", "Home");
