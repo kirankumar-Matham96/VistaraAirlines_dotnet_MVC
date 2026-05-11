@@ -10,6 +10,9 @@
 {
     @Html.HiddenFor(m => m.FlightId)
     @Html.HiddenFor(m => m.TravelDate)
+    @Html.HiddenFor(m => m.EconomyFare)
+    @Html.HiddenFor(m => m.BusinessFare)
+    @Html.HiddenFor(m => m.ExecutiveFare)
 
     <span>@Html.ValidationSummary("", new { @class = "text-danger" })</span>
 
@@ -32,7 +35,17 @@
             ViewBag.index = 0;
         }
 
-        @Html.Partial("_PassengerFormPartial", new VistaraAirLinesApp.Models.ViewModels.PassengerViewModel());
+        @Html.Partial("_PassengerFormPartial", new VistaraAirLinesApp.Models.ViewModels.PassengerViewModel())
+    </div>
+
+    <div class="card p-3 mt-4">
+        <h3>Booking Summary</h3>
+        <hr />
+        <p><strong>Passengers:</strong><span id="summary-passenger-count"></span></p>
+        <p><strong>Base Fare:</strong> ₹<span id="summary-base-fare">0</span></p>
+        <p><strong>GST (@ViewBag.GST_PERCENT%):</strong> ₹<span id="summary-gst">0</span></p>
+        <hr />
+        <h4>Total : ₹<span id="summary-total">0</span></h4>
     </div>
 
     <button type="button" class="btn btn-secondary" id="add-passenger-btn">➕ Add Passenger</button>
@@ -56,14 +69,20 @@
             Create Booking
         </button>
 
-        @Html.ActionLink("Cancel","SearchFlights","Bookings",null,new {@class = "btn btn-secondary ms-2", onclick = "return confirm('Cancel current booking process?');" })
+        @Html.ActionLink("Cancel", "SearchFlights", "Bookings", null, new { @class = "btn btn-secondary ms-2", onclick = "return confirm('Cancel current booking process?');" })
     </div>
 }
 <script src="~/Scripts/jquery-3.7.1.js"></script>
 <script>
+    const GST_PERCENT = 10;
+
     $(document).ready(function () {
+
         let passengerIndex = 1;
         updatePassengerTitles();
+        updateBookingSummary();
+
+        $(document).on("change", "select", function () { updateBookingSummary(); });
 
         //---------------------------------------
         // ADD PASSENGER
@@ -83,10 +102,6 @@
         //---------------------------------------
         $(document).on("click", ".remove-passenger-btn",
             function () {
-                //$(this)
-                //    .closest(".passenger-block")
-                //    .remove();
-
                 if ($(".passenger-block").length > 1) {
                     $(this).closest(".passenger-block").remove();
                     reIndexPassengers();
@@ -98,6 +113,7 @@
 
                 reIndexPassengers();
                 updatePassengerTitles();
+                updateBookingSummary();
             });
 
         //---------------------------------------
@@ -111,28 +127,63 @@
             });
         }
 
+        /***********/
+        function updateBookingSummary() {
+            //------------------------------------
+            // GET FARES
+            //------------------------------------
+            let economyFare = parseFloat($("#EconomyFare").val()) || 0;
+            let businessFare = parseFloat($("#BusinessFare").val()) || 0;
+            let executiveFare = parseFloat($("#ExecutiveFare").val()) || 0;
+
+            //------------------------------------
+            // CALCULATE
+            //------------------------------------
+            let passengerCount = 0;
+            let baseFare = 0;
+
+            $(".passenger-block").each(function () {
+                let selectedClass = $(this).find("select").val();
+
+                if (selectedClass) {
+                    passengerCount++;
+                    switch (selectedClass) {
+                        case "ECONOMY":
+                            baseFare += economyFare;
+                            break;
+                        case "BUSINESS":
+                            baseFare += businessFare;
+                            break;
+                        case "EXECUTIVE":
+                            baseFare += executiveFare;
+                            break;
+                    }
+                }
+            });
+
+            //------------------------------------
+            // GST
+            //------------------------------------
+            let gstAmount = (baseFare * @ViewBag.GST_PERCENT) / 100;
+
+            //------------------------------------
+            // TOTAL
+            //------------------------------------
+            let total = baseFare + gstAmount;
+
+            //------------------------------------
+            // UPDATE UI
+            //------------------------------------
+            $("#summary-passenger-count").text(passengerCount);
+            $("#summary-base-fare").text(baseFare.toFixed(2));
+            $("#summary-gst").text(gstAmount.toFixed(2));
+            $("#summary-total").text(total.toFixed(2));
+        }
+        /***********/
+
         //---------------------------------------
         // REINDEX INPUT NAMES
         //---------------------------------------
-        //function reIndexPassengers() {
-        //    $(".passenger-block").each(function (newIndex) {
-        //        $(this)
-        //            .find("input, select")
-        //            .each(function () {
-        //                let currentName =
-        //                    $(this).attr("name");
-
-        //                if (currentName) {
-        //                    let updatedName =
-        //                        currentName.replace(
-        //                            /PassengerList\[\d+\]/,
-        //                            "PassengerList[" + newIndex + "]"
-        //                        );
-        //                    $(this).attr("name", updatedName);
-        //                }
-        //            });
-        //    });
-        //}
         function reIndexPassengers() {
             $(".passenger-block").each(function (newIndex) {
 

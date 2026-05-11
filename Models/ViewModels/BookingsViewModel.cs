@@ -23,6 +23,15 @@ namespace VistaraAirLinesApp.Models.ViewModels
         [DataType(DataType.Date)]
         public DateTime TravelDate { get; set; }
 
+        [DataType(DataType.Currency)]
+        public decimal ExecutiveFare { get; set; }
+
+        [DataType(DataType.Currency)]
+        public decimal BusinessFare { get; set; }
+
+        [DataType(DataType.Currency)]
+        public decimal EconomyFare { get; set; }
+
         [Required]
         [DataType(DataType.Currency)]
         public decimal TotalFare { get; set; }

@@ -21,7 +21,7 @@ namespace VistaraAirLinesApp.Controllers
         VISTARA_DBEntities4 _db = new VISTARA_DBEntities4();
 
         private readonly decimal GST_PERCENT = 10;
-
+        
         //Search available flights(get flights with filter)
         public ActionResult SearchFlights()
         {
@@ -115,6 +115,7 @@ namespace VistaraAirLinesApp.Controllers
         //Create booking
         public ActionResult AddBooking(int id)
         {
+            ViewBag.GST_PERCENT = GST_PERCENT;
             var flightInventory = _db.FlightInventories.FirstOrDefault(f => f.FlightId == id);
 
             if (flightInventory == null)
@@ -124,6 +125,9 @@ namespace VistaraAirLinesApp.Controllers
             {
                 FlightId = id,
                 TravelDate = flightInventory.TravelDate,
+                ExecutiveFare = flightInventory.ExecutiveFare,
+                BusinessFare = flightInventory.BusinessFare,
+                EconomyFare = flightInventory.EconomyFare,
                 PassengerList = new List<PassengerViewModel>()
                 {
                     new PassengerViewModel() // This creates the FIRST passenger form automatically.
