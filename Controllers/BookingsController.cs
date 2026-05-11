@@ -21,7 +21,7 @@ namespace VistaraAirLinesApp.Controllers
         VISTARA_DBEntities4 _db = new VISTARA_DBEntities4();
 
         private readonly decimal GST_PERCENT = 10;
-        
+
         //Search available flights(get flights with filter)
         public ActionResult SearchFlights()
         {
@@ -142,6 +142,38 @@ namespace VistaraAirLinesApp.Controllers
         {
             try
             {
+                /* This block is to prevent empty booking submissions */
+                /********************************************************/
+                //-----------------------------------
+                // VALIDATE PASSENGERS
+                //-----------------------------------
+                if (bookingVM.PassengerList == null || !bookingVM.PassengerList.Any())
+                {
+                    ModelState.AddModelError("","At least one passenger is required.");
+                    return View(bookingVM);
+                }
+
+                //-----------------------------------
+                // REMOVE EMPTY PASSENGERS
+                //-----------------------------------
+                bookingVM.PassengerList = bookingVM.PassengerList.Where(p =>
+                        !string.IsNullOrWhiteSpace(p.FullName) &&
+                        !string.IsNullOrWhiteSpace(p.Email) &&
+                        !string.IsNullOrWhiteSpace(p.Phone) &&
+                        !string.IsNullOrWhiteSpace(p.SeatNo) &&
+                        !string.IsNullOrWhiteSpace(p.Class))
+                    .ToList();
+
+                //-----------------------------------
+                // CHECK AGAIN
+                //-----------------------------------
+                if (!bookingVM.PassengerList.Any())
+                {
+                    ModelState.AddModelError("","Passenger details are required.");
+                    return View(bookingVM);
+                }
+                /********************************************************/
+
                 if (!ModelState.IsValid)
                 {
                     return View(bookingVM);
@@ -162,6 +194,37 @@ namespace VistaraAirLinesApp.Controllers
                         ModelState.AddModelError("", "Flight inventory not found");
                         return View(bookingVM);
                     }
+
+                    /* This block is to check seat availability */
+                    /* ************************ */
+                    //-----------------------------------
+                    // CHECK AVAILABLE SEATS
+                    //-----------------------------------
+                    int economyCount =bookingVM.PassengerList.Count(p => p.Class == "ECONOMY");
+                    int businessCount =bookingVM.PassengerList.Count(p => p.Class == "BUSINESS");
+                    int executiveCount = bookingVM.PassengerList.Count(p => p.Class == "EXECUTIVE");
+
+                    //-----------------------------------
+                    // VALIDATE
+                    //-----------------------------------
+                    if (economyCount > flightInventory.EconomySeats)
+                    {
+                        ModelState.AddModelError("","Not enough Economy seats available.");
+                        return View(bookingVM);
+                    }
+
+                    if (businessCount > flightInventory.BusinessSeats)
+                    {
+                        ModelState.AddModelError("","Not enough Business seats available.");
+                        return View(bookingVM);
+                    }
+
+                    if (executiveCount > flightInventory.ExecutiveSeats)
+                    {
+                        ModelState.AddModelError("","Not enough Executive seats available.");
+                        return View(bookingVM);
+                    }
+                    /* ************************ */
 
                     switch (passenger.Class)
                     {
@@ -213,6 +276,30 @@ namespace VistaraAirLinesApp.Controllers
 
                     _db.PassengerDetails.Add(newPassenger);
                 }
+
+                /* This block is to reduce the seat number after the booking */
+                /***********************************/
+                //-----------------------------------
+                // REDUCE SEATS
+                //-----------------------------------
+
+                foreach (var passenger in bookingVM.PassengerList)
+                {
+                    switch (passenger.Class)
+                    {
+                        case "ECONOMY":
+                            flightInventory.EconomySeats--;
+                            break;
+                        case "BUSINESS":
+                            flightInventory.BusinessSeats--;
+                            break;
+                        case "EXECUTIVE":
+                            flightInventory.ExecutiveSeats--;
+                            break;
+                    }
+                }
+                /***********************************/
+
                 _db.SaveChanges();
 
                 return RedirectToAction(nameof(BookingHistory));
@@ -258,14 +345,14 @@ namespace VistaraAirLinesApp.Controllers
                         PassengerCount = b.PassengerDetails.Count(),
 
                         Passengers = b.PassengerDetails.Select(p => new PassengerViewModel()
-                            {
-                                PassengerId = p.PassengerId,
-                                FullName = p.FullName,
-                                SeatNo = p.SeatNo,
-                                Class = p.Class,
-                                Phone = p.Phone,
-                                Email = p.Email
-                            }).ToList()
+                        {
+                            PassengerId = p.PassengerId,
+                            FullName = p.FullName,
+                            SeatNo = p.SeatNo,
+                            Class = p.Class,
+                            Phone = p.Phone,
+                            Email = p.Email
+                        }).ToList()
                     }
                 ).ToList();
 
@@ -310,27 +397,154 @@ namespace VistaraAirLinesApp.Controllers
                     // PASSENGERS
                     //-----------------------------------
                     Passengers = booking.PassengerDetails.Select(p => new PassengerViewModel()
-                        {
-                            PassengerId = p.PassengerId,
-                            FullName = p.FullName,
-                            Email = p.Email,
-                            Phone = p.Phone,
-                            SeatNo = p.SeatNo,
-                            Class = p.Class
-                        }).ToList()
+                    {
+                        PassengerId = p.PassengerId,
+                        FullName = p.FullName,
+                        Email = p.Email,
+                        Phone = p.Phone,
+                        SeatNo = p.SeatNo,
+                        Class = p.Class
+                    }).ToList()
                 };
 
             return View(ticket);
         }
 
         //Seat selection
+        //Seat Selection
+
         //Fare calculation
         //Booking status
 
         //PassengerController
-        //Seat Selection
+
         //PaymentController
+
         //Booking Confirmation
+
         //CancellationController
+        public ActionResult CancelBooking(int id)
+        {
+            //-----------------------------------
+            // GET BOOKING
+            //-----------------------------------
+            var booking = _db.Bookings.FirstOrDefault(b => b.BookingId == id);
+
+            if (booking == null)
+            {
+                return HttpNotFound();
+            }
+
+            //-----------------------------------
+            // ALREADY CANCELLED?
+            //-----------------------------------
+
+            if (booking.BookingStatus == "CANCELLED")
+            {
+                return Content("Booking already cancelled.");
+            }
+
+            //-----------------------------------
+            // GET FLIGHT
+            //-----------------------------------
+            var flight = _db.Flights.FirstOrDefault(f => f.FlightId == booking.FlightId);
+
+            //-----------------------------------
+            // REFUND LOGIC
+            //-----------------------------------
+            decimal deduction = booking.TotalFare * 10 / 100;
+            decimal refund = booking.TotalFare - deduction;
+
+            //-----------------------------------
+            // VIEWMODEL
+            //-----------------------------------
+            CancellationViewModel vm = new CancellationViewModel()
+            {
+                BookingId = booking.BookingId,
+                CancelDate = DateTime.Now,
+                OriginalFare = booking.TotalFare,
+                Deduction = deduction,
+                RefundAmount = refund,
+                FlightCode = flight.FlightCode,
+                TravelDate = booking.TravelDate
+            };
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult CancelBooking(CancellationViewModel vm)
+        {
+            try
+            {
+                //-----------------------------------
+                // GET BOOKING
+                //-----------------------------------
+                var booking = _db.Bookings.FirstOrDefault(b => b.BookingId == vm.BookingId);
+
+                if (booking == null)
+                {
+                    return HttpNotFound();
+                }
+
+                //-----------------------------------
+                // UPDATE BOOKING STATUS
+                //-----------------------------------
+                booking.BookingStatus = "CANCELLED";
+
+                booking.UpdatedAt = DateTime.Now;
+
+                //-----------------------------------
+                // CREATE CANCELLATION RECORD
+                //-----------------------------------
+                Cancellation cancellation = new Cancellation()
+                {
+                    BookingId = vm.BookingId,
+                    CancelDate = DateTime.Now,
+                    RefundAmount = vm.RefundAmount,
+                    Deduction = vm.Deduction,
+                    Reason = vm.Reason,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                };
+
+                _db.Cancellations.Add(cancellation);
+
+                //-----------------------------------
+                // RESTORE SEATS
+                //-----------------------------------
+                var passengers = _db.PassengerDetails.Where(p => p.BookingId == vm.BookingId).ToList();
+
+                var inventory = _db.FlightInventories.FirstOrDefault(fi => fi.FlightId == booking.FlightId && DbFunctions.TruncateTime(fi.TravelDate) == DbFunctions.TruncateTime(booking.TravelDate));
+
+                if (inventory != null)
+                {
+                    foreach (var passenger in passengers)
+                    {
+                        switch (passenger.Class)
+                        {
+                            // if there are more than one seat for a booking, the how can we detect it?
+                            case "ECONOMY":
+                                inventory.EconomySeats++;
+                                break;
+                            case "BUSINESS":
+                                inventory.BusinessSeats++;
+                                break;
+                            case "EXECUTIVE":
+                                inventory.ExecutiveSeats++;
+                                break;
+                        }
+                    }
+                }
+                _db.SaveChanges();
+
+                return RedirectToAction(nameof(BookingHistory));
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+
     }
 }

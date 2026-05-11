@@ -7,6 +7,11 @@
 <div class="container">
     <h2>Booking History</h2>
     <hr />
+
+    <div class="mb-3">
+        @Html.ActionLink("Back To Flights", "SearchFlights", "Bookings", null, new { @class = "btn btn-primary" })
+    </div>
+
     @if (!Model.Any())
     {
         <p>No bookings found.</p>
@@ -18,11 +23,11 @@
             <div class="card p-3 mb-4">
                 <h4>Booking #@booking.BookingId</h4>
                 <hr />
-                <p><strong>Flight:</strong>@booking.FlightCode-@booking.FlightName</p>
-                <p><strong>Route:</strong>@booking.Source → @booking.Destination</p>
-                <p><strong>Travel Date:</strong>@booking.TravelDate.ToShortDateString()</p>
-                <p><strong>Passengers:</strong>@booking.PassengerCount</p>
-                <p><strong>Total Fare:</strong>₹@booking.TotalFare</p>
+                <p><strong>Flight:</strong> @booking.FlightCode-@booking.FlightName</p>
+                <p><strong>Route:</strong> @booking.Source → @booking.Destination</p>
+                <p><strong>Travel Date:</strong> @booking.TravelDate.ToShortDateString()</p>
+                <p><strong>Passengers:</strong> @booking.PassengerCount</p>
+                <p><strong>Total Fare:</strong> ₹@booking.TotalFare</p>
                 <p><strong>Status:</strong> @booking.BookingStatus</p>
                 <hr />
                 <h5>Passenger Details</h5>
@@ -50,7 +55,17 @@
 
                 <div class="mt-3">
                     @Html.ActionLink("View Ticket", "BookingDetails", new { id = booking.BookingId }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Cancel Booking", "CancelBooking", new { id = booking.BookingId }, new { @class = "btn btn-danger ms-2" })
+
+                    @*@Html.ActionLink("Cancel Booking", "CancelBooking", new { id = booking.BookingId }, new { @class = "btn btn-danger ms-2" });*@
+
+                    @if (booking.BookingStatus == "CANCELLED")
+                    {
+                        <span class="btn btn-secondary ms-2 disabled">CANCELLED</span>
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Cancel Booking", "CancelBooking", new { id = booking.BookingId }, new { @class = "btn btn-danger ms-2" })
+                    }
                 </div>
             </div>
         }

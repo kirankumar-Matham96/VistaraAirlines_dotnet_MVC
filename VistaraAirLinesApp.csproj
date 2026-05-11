@@ -166,6 +166,7 @@
     </Compile>
     <Compile Include="Models\ViewModels\BookingHistoryViewModel.cs" />
     <Compile Include="Models\ViewModels\BookingsViewModel.cs" />
+    <Compile Include="Models\ViewModels\CancellationViewModel.cs" />
     <Compile Include="Models\ViewModels\FlightSearchViewModel.cs" />
     <Compile Include="Models\ViewModels\FlightViewModel.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
@@ -270,6 +271,7 @@
     <Content Include="Views\Shared\_PassengerFormPartial.cshtml" />
     <Content Include="Views\Bookings\BookingHistory.cshtml" />
     <Content Include="Views\Bookings\BookingDetails.cshtml" />
+    <Content Include="Views\Bookings\CancelBooking.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

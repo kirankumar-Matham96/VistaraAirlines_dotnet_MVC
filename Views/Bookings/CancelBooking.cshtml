@@ -1,0 +1,43 @@
+﻿@model VistaraAirLinesApp.Models.ViewModels.CancellationViewModel
+
+@{
+    ViewBag.Title = "Cancel Booking";
+}
+
+<div class="container">
+    <div class="card p-4">
+        <h2>Cancel Booking</h2>
+
+        <hr />
+
+        <p><strong>Booking ID:</strong> @Model.BookingId</p>
+        <p><strong>Flight:</strong> @Model.FlightCode</p>
+        <p><strong>Travel Date:</strong> @Model.TravelDate.ToShortDateString()</p>
+
+        <hr />
+
+        <p> <strong>Original Fare:</strong> ₹@Model.OriginalFare</p>
+        <p><strong>Cancellation Deduction:</strong> ₹@Model.Deduction</p>
+        <p><strong>Refund Amount:</strong> ₹@Model.RefundAmount</p>
+
+        <hr />
+
+        @using (Html.BeginForm())
+        {
+            @Html.HiddenFor(m => m.BookingId)
+            @Html.HiddenFor(m => m.RefundAmount)
+            @Html.HiddenFor(m => m.Deduction)
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Reason)
+                @Html.TextAreaFor(m => m.Reason, new {@class = "form-control", rows = 4})
+                @Html.ValidationMessageFor(m => m.Reason)
+            </div>
+
+            <div class="mt-3">
+                <button type="submit" class="btn btn-danger">Confirm Cancellation</button>
+                @Html.ActionLink("Back","BookingHistory", null, new {@class = "btn btn-secondary ms-2"})
+            </div>
+        }
+    </div>
+</div>

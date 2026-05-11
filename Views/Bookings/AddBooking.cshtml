@@ -6,6 +6,8 @@
 
 <h2>Add Booking</h2>
 
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
 @using (Html.BeginForm())
 {
     @Html.HiddenFor(m => m.FlightId)
