@@ -265,6 +265,7 @@
     <Content Include="Views\Bookings\AddBooking.cshtml" />
     <Content Include="Views\Bookings\SearchFlights.cshtml" />
     <Content Include="Views\Shared\_FlightsList.cshtml" />
+    <Content Include="Views\Shared\_PassengerFormPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

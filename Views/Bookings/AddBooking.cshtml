@@ -27,47 +27,141 @@
 
     <h3>Passenger Details</h3>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.PassengerList[0].FullName)
-        @Html.TextBoxFor(m => m.PassengerList[0].FullName, new { @class = "form-control" })
+    <div id="passenger-container" class="container">
+        @{
+            ViewBag.index = 0;
+        }
+
+        @Html.Partial("_PassengerFormPartial", new VistaraAirLinesApp.Models.ViewModels.PassengerViewModel());
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.PassengerList[0].Address)
-        @Html.TextBoxFor(m => m.PassengerList[0].Address, new { @class = "form-control" })
-    </div>
+    <button type="button" class="btn btn-secondary" id="add-passenger-btn">➕ Add Passenger</button>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.PassengerList[0].Phone)
-        @Html.TextBoxFor(m => m.PassengerList[0].Phone, new { @class = "form-control" })
-    </div>
+    // HIDDEN TEMPLATE
+    <script type="text/template" id="passenger-template">
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.PassengerList[0].Email)
-        @Html.TextBoxFor(m => m.PassengerList[0].Email, new { @class = "form-control" })
-    </div>
+        @{
+            ViewBag.Index = "__index__";
+        }
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.PassengerList[0].SeatNo)
-        @Html.TextBoxFor(m => m.PassengerList[0].SeatNo, new { @class = "form-control" })
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.PassengerList[0].Class)
-        @Html.DropDownListFor(
-            m => m.PassengerList[0].Class,
-            new List<SelectListItem>()
-            {
-                new SelectListItem(){ Text="ECONOMY", Value="ECONOMY"},
-                new SelectListItem(){ Text="BUSINESS", Value="BUSINESS"},
-                new SelectListItem(){ Text="EXECUTIVE", Value="EXECUTIVE"},
-            },
-            "Select Class",
-            new { @class = "form-control" }
+        @Html.Partial(
+            "_PassengerFormPartial",
+            new VistaraAirLinesApp.Models.ViewModels.PassengerViewModel()
         )
-    </div>
 
-    <button type="submit" class="btn btn-primary">
-        Create Booking
-    </button>
+    </script>
+
+    <div class="mt-3">
+        <button type="submit" class="btn btn-primary">
+            Create Booking
+        </button>
+
+        @Html.ActionLink("Cancel","SearchFlights","Bookings",null,new {@class = "btn btn-secondary ms-2", onclick = "return confirm('Cancel current booking process?');" })
+    </div>
 }
+<script src="~/Scripts/jquery-3.7.1.js"></script>
+<script>
+    $(document).ready(function () {
+        let passengerIndex = 1;
+        updatePassengerTitles();
+
+        //---------------------------------------
+        // ADD PASSENGER
+        //---------------------------------------
+        $("#add-passenger-btn").click(function () {
+            let template = $("#passenger-template").html();
+            template = template.replace(/__index__/g, passengerIndex);
+
+            $("#passenger-container").append(template);
+
+            passengerIndex++;
+            updatePassengerTitles();
+        });
+
+        //---------------------------------------
+        // REMOVE PASSENGER
+        //---------------------------------------
+        $(document).on("click", ".remove-passenger-btn",
+            function () {
+                //$(this)
+                //    .closest(".passenger-block")
+                //    .remove();
+
+                if ($(".passenger-block").length > 1) {
+                    $(this).closest(".passenger-block").remove();
+                    reIndexPassengers();
+                    updatePassengerTitles();
+                }
+                else {
+                    alert("At least one passenger is required.");
+                }
+
+                reIndexPassengers();
+                updatePassengerTitles();
+            });
+
+        //---------------------------------------
+        // UPDATE PASSENGER TITLES
+        //---------------------------------------
+        function updatePassengerTitles() {
+            $(".passenger-block").each(function (index) {
+                $(this)
+                    .find(".passenger-title")
+                    .text("Passenger " + (index + 1));
+            });
+        }
+
+        //---------------------------------------
+        // REINDEX INPUT NAMES
+        //---------------------------------------
+        //function reIndexPassengers() {
+        //    $(".passenger-block").each(function (newIndex) {
+        //        $(this)
+        //            .find("input, select")
+        //            .each(function () {
+        //                let currentName =
+        //                    $(this).attr("name");
+
+        //                if (currentName) {
+        //                    let updatedName =
+        //                        currentName.replace(
+        //                            /PassengerList\[\d+\]/,
+        //                            "PassengerList[" + newIndex + "]"
+        //                        );
+        //                    $(this).attr("name", updatedName);
+        //                }
+        //            });
+        //    });
+        //}
+        function reIndexPassengers() {
+            $(".passenger-block").each(function (newIndex) {
+
+                //-----------------------------------
+                // UPDATE INPUTS + SELECTS
+                //-----------------------------------
+                $(this).find("input, select").each(function () {
+
+                    //-----------------------------------
+                    // UPDATE NAME
+                    //-----------------------------------
+
+                    let currentName = $(this).attr("name");
+
+                    if (currentName) {
+                        let updatedName = currentName.replace(/PassengerList\[\d+\]/, "PassengerList[" + newIndex + "]");
+                        $(this).attr("name", updatedName);
+                    }
+                    //-----------------------------------
+                    // UPDATE ID
+                    //-----------------------------------
+                    let currentId = $(this).attr("id");
+
+                    if (currentId) {
+                        let updatedId = currentId.replace(/PassengerList_\d+__/, "PassengerList_" + newIndex + "__");
+                        $(this).attr("id", updatedId);
+                    }
+                });
+            });
+        }
+    });
+</script>

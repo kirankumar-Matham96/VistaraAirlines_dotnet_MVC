@@ -12,7 +12,9 @@ SELECT * FROM FlightInventory;
 
 
 -- Bookings
--- PassengerDetails
 SELECT * FROM Booking;
+-- PassengerDetails
 SELECT * FROM PassengerDetails;
+
+sp_help PassengerDetails;
 

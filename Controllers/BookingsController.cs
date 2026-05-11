@@ -138,7 +138,6 @@ namespace VistaraAirLinesApp.Controllers
         {
             try
             {
-
                 if (!ModelState.IsValid)
                 {
                     return View(bookingVM);
@@ -215,9 +214,21 @@ namespace VistaraAirLinesApp.Controllers
 
                 return RedirectToAction(nameof(SearchFlights));
             }
+            //catch (Exception ex)
+            //{
+            //    return Content(ex.Message);
+            //}
+
             catch (Exception ex)
             {
-                return Content(ex.Message);
+                Exception inner = ex;
+
+                while (inner.InnerException != null)
+                {
+                    inner = inner.InnerException;
+                }
+
+                return Content(inner.Message);
             }
         }
 
