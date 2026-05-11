@@ -52,7 +52,6 @@
 
     // HIDDEN TEMPLATE
     <script type="text/template" id="passenger-template">
-
         @{
             ViewBag.Index = "__index__";
         }
@@ -61,7 +60,6 @@
             "_PassengerFormPartial",
             new VistaraAirLinesApp.Models.ViewModels.PassengerViewModel()
         )
-
     </script>
 
     <div class="mt-3">
@@ -121,9 +119,7 @@
         //---------------------------------------
         function updatePassengerTitles() {
             $(".passenger-block").each(function (index) {
-                $(this)
-                    .find(".passenger-title")
-                    .text("Passenger " + (index + 1));
+                $(this).find(".passenger-title").text("Passenger " + (index + 1));
             });
         }
 

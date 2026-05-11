@@ -154,7 +154,6 @@ namespace VistaraAirLinesApp.Controllers
                     f => f.FlightId == bookingVM.FlightId && DbFunctions.TruncateTime(f.TravelDate) ==
                     DbFunctions.TruncateTime(bookingVM.TravelDate));
 
-
                 foreach (var passenger in bookingVM.PassengerList)
                 {
 
@@ -216,7 +215,7 @@ namespace VistaraAirLinesApp.Controllers
                 }
                 _db.SaveChanges();
 
-                return RedirectToAction(nameof(SearchFlights));
+                return RedirectToAction(nameof(BookingHistory));
             }
             //catch (Exception ex)
             //{
@@ -236,9 +235,94 @@ namespace VistaraAirLinesApp.Controllers
             }
         }
 
+        // Booking history
+        public ActionResult BookingHistory()
+        {
+            var bookings =
+                (
+                    from b in _db.Bookings
+                    join f in _db.Flights
+                    on b.FlightId equals f.FlightId
+                    where b.IsDeleted == false
+                    select new BookingHistoryViewModel()
+                    {
+                        BookingId = b.BookingId,
+                        FlightId = b.FlightId,
+                        FlightCode = f.FlightCode,
+                        FlightName = f.FlightName,
+                        Source = f.Source,
+                        Destination = f.Destination,
+                        TravelDate = b.TravelDate,
+                        TotalFare = b.TotalFare,
+                        BookingStatus = b.BookingStatus,
+                        PassengerCount = b.PassengerDetails.Count(),
+
+                        Passengers = b.PassengerDetails.Select(p => new PassengerViewModel()
+                            {
+                                PassengerId = p.PassengerId,
+                                FullName = p.FullName,
+                                SeatNo = p.SeatNo,
+                                Class = p.Class,
+                                Phone = p.Phone,
+                                Email = p.Email
+                            }).ToList()
+                    }
+                ).ToList();
+
+            return View(bookings);
+        }
 
         //View booking details
-        //Booking history
+        public ActionResult BookingDetails(int id)
+        {
+            var booking = _db.Bookings.FirstOrDefault(b => b.BookingId == id);
+
+            if (booking == null)
+            {
+                return HttpNotFound();
+            }
+
+            var flight = _db.Flights.FirstOrDefault(f => f.FlightId == booking.FlightId);
+
+            TicketViewModel ticket =
+                new TicketViewModel()
+                {
+                    //-----------------------------------
+                    // BOOKING
+                    //-----------------------------------
+                    BookingId = booking.BookingId,
+                    BookingStatus = booking.BookingStatus,
+                    TravelDate = booking.TravelDate,
+                    TotalFare = booking.TotalFare,
+
+                    //-----------------------------------
+                    // FLIGHT
+                    //-----------------------------------
+                    FlightId = flight.FlightId,
+                    FlightCode = flight.FlightCode,
+                    FlightName = flight.FlightName,
+                    Source = flight.Source,
+                    Destination = flight.Destination,
+                    ArrivalTime = flight.ArrivalTime,
+                    DepartureTime = flight.DepartureTime,
+
+                    //-----------------------------------
+                    // PASSENGERS
+                    //-----------------------------------
+                    Passengers = booking.PassengerDetails.Select(p => new PassengerViewModel()
+                        {
+                            PassengerId = p.PassengerId,
+                            FullName = p.FullName,
+                            Email = p.Email,
+                            Phone = p.Phone,
+                            SeatNo = p.SeatNo,
+                            Class = p.Class
+                        }).ToList()
+                };
+
+            return View(ticket);
+        }
+
         //Seat selection
         //Fare calculation
         //Booking status

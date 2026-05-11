@@ -1,0 +1,78 @@
+﻿@model VistaraAirLinesApp.Models.ViewModels.TicketViewModel
+
+@{
+    ViewBag.Title = "Ticket Details";
+}
+
+<div class="container">
+    <div class="card p-4">
+        <h2 class="text-center">VISTARA AIRLINES</h2>
+        <h4 class="text-center">E-Ticket</h4>
+
+        <hr />
+
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Booking ID:</strong> @Model.BookingId</p>
+                <p><strong>Status:</strong> @Model.BookingStatus</p>
+                <p><strong>Travel Date:</strong> @Model.TravelDate.ToShortDateString()</p>
+            </div>
+
+            <div class="col-md-6">
+                <p><strong>Total Fare:</strong> ₹@Model.TotalFare</p>
+            </div>
+        </div>
+
+        <hr />
+
+        <h4>Flight Information</h4>
+
+        <table class="table table-bordered">
+            <tr>
+                <th>Flight Code</th>
+                <th>Flight Name</th>
+                <th>Route</th>
+                <th>Departure</th>
+                <th>Arrival</th>
+            </tr>
+
+            <tr>
+                <td>@Model.FlightCode</td>
+                <td>@Model.FlightName</td>
+                <td>@Model.Source → @Model.Destination</td>
+                <td>@Model.DepartureTime</td>
+                <td>@Model.ArrivalTime</td>
+            </tr>
+        </table>
+
+        <hr />
+
+        <h4>Passenger Details</h4>
+
+        <table class="table table-striped">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Seat No</th>
+                <th>Class</th>
+            </tr>
+
+            @foreach (var passenger in Model.Passengers)
+            {
+                <tr>
+                    <td>@passenger.FullName</td>
+                    <td>@passenger.Email</td>
+                    <td>@passenger.Phone</td>
+                    <td>@passenger.SeatNo</td>
+                    <td>@passenger.Class</td>
+                </tr>
+            }
+        </table>
+
+        <div class="mt-4">
+            @Html.ActionLink("Back To Booking History", "BookingHistory", null, new { @class = "btn btn-secondary" })
+            <button onclick="window.print()" class="btn btn-primary ms-2">Print Ticket</button>
+        </div>
+    </div>
+</div>
