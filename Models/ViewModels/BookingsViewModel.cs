@@ -8,6 +8,11 @@ namespace VistaraAirLinesApp.Models.ViewModels
 {
     public class BookingsViewModel
     {
+        public BookingsViewModel()
+        {
+            PassengerList = new List<PassengerViewModel>();
+        }
+
         [Key]
         public int BookingId { get; set; }
 
@@ -22,7 +27,9 @@ namespace VistaraAirLinesApp.Models.ViewModels
         [DataType(DataType.Currency)]
         public decimal TotalFare { get; set; }
 
-        [Required]
+        //[Required]
+        public List<PassengerViewModel> PassengerList { get; set; }
+
         public string BookingStatus { get; set; }
 
         public bool IsDeleted { get; set; }

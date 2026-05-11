@@ -15,7 +15,7 @@ namespace VistaraAirLinesApp.Models.ViewModels
         public string Destination { get; set; }
         
         public DateTime TravelDate { get; set; }
-        
+
         public List<FlightViewModel> FlightsList { get; set; }
 
         public IEnumerable<string> Sources { get; set; }

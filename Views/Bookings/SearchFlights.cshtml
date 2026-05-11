@@ -42,8 +42,12 @@
 
     @if (Model.FlightsList != null && Model.FlightsList.Any())
     {
+        /* use this partial view for the reusability */
+        //Html.Partial("_FlightsList", Model.FlightsList);
+
         <table class="table">
             <tr>
+                <th>FlightId</th>
                 <th>FlightCode</th>
                 <th>FlightName</th>
                 <th>Source</th>
@@ -63,6 +67,7 @@
             @foreach (var flight in Model.FlightsList)
             {
                 <tr>
+                    <td>@flight.FlightId</td>
                     <td>@flight.FlightCode</td>
                     <td>@flight.FlightName</td>
                     <td>@flight.Source</td>
@@ -86,7 +91,7 @@
                             "Book Now",
                             "AddBooking",
                             "Bookings",
-                            new { id = flight.FlightCode },
+                            new { id = flight.FlightId },
                             new { @class = "btn btn-primary" }
                         )
                     </td>

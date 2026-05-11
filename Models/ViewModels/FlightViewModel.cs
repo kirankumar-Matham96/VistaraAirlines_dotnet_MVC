@@ -8,6 +8,9 @@ namespace VistaraAirLinesApp.Models.ViewModels
 {
     public class FlightViewModel
     {
+        [Key]
+        public int FlightId { get; set; }
+
         [Required]
         [Display(Name = "Flight Code")]
         public string FlightCode { get; set; }

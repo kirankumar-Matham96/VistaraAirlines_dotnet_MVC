@@ -1,48 +1,73 @@
 ﻿@model VistaraAirLinesApp.Models.ViewModels.BookingsViewModel
 
 @{
-    ViewBag.Title = "AddBooking";
+    ViewBag.Title = "Add Booking";
 }
 
-<div class="container">
+<h2>Add Booking</h2>
 
-    <h2>AddBooking</h2>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.FlightId)
+    @Html.HiddenFor(m => m.TravelDate)
 
-    @using (Html.BeginForm("AddBooking", "Bookings", FormMethod.Post, new { @class = "form" }))
-    {
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.BookingId)
-            @Html.EditorFor(model => model.BookingId)
-            @Html.ValidationMessageFor(model => model.BookingId)
-        </div>*@
+    <span>@Html.ValidationSummary("", new { @class = "text-danger" })</span>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.FlightId)
-            @Html.EditorFor(model => model.FlightId)
-            @Html.ValidationMessageFor(model => model.FlightId)
-        </div>
+    <div class="form-group">
+        <label>Flight Id</label>
+        <input type="text" value="@Model.FlightId" class="form-control" readonly />
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TravelDate)
-            @Html.EditorFor(model => model.TravelDate)
-            @Html.ValidationMessageFor(model => model.TravelDate)
-        </div>
+    <div class="form-group">
+        <label>Travel Date</label>
+        <input type="text" value="@Model.TravelDate.ToShortDateString()" class="form-control" readonly />
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TotalFare)
-            @Html.EditorFor(model => model.TotalFare)
-            @Html.ValidationMessageFor(model => model.TotalFare)
-        </div>
+    <hr />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.BookingStatus)
-            @Html.EditorFor(model => model.BookingStatus)
-            @Html.ValidationMessageFor(model => model.BookingStatus)
-        </div>
+    <h3>Passenger Details</h3>
 
-        <div class="form-group">
-            <buton type="submit" class="btn btn-primary">Book</buton>
-        </div>
-    }
+    <div class="form-group">
+        @Html.LabelFor(m => m.PassengerList[0].FullName)
+        @Html.TextBoxFor(m => m.PassengerList[0].FullName, new { @class = "form-control" })
+    </div>
 
-</div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.PassengerList[0].Address)
+        @Html.TextBoxFor(m => m.PassengerList[0].Address, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PassengerList[0].Phone)
+        @Html.TextBoxFor(m => m.PassengerList[0].Phone, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PassengerList[0].Email)
+        @Html.TextBoxFor(m => m.PassengerList[0].Email, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PassengerList[0].SeatNo)
+        @Html.TextBoxFor(m => m.PassengerList[0].SeatNo, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PassengerList[0].Class)
+        @Html.DropDownListFor(
+            m => m.PassengerList[0].Class,
+            new List<SelectListItem>()
+            {
+                new SelectListItem(){ Text="ECONOMY", Value="ECONOMY"},
+                new SelectListItem(){ Text="BUSINESS", Value="BUSINESS"},
+                new SelectListItem(){ Text="EXECUTIVE", Value="EXECUTIVE"},
+            },
+            "Select Class",
+            new { @class = "form-control" }
+        )
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Create Booking
+    </button>
+}

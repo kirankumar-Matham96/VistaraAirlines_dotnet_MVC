@@ -3,7 +3,6 @@
     ViewBag.Title = "GetFlightDetails";
 }
 
-
 <duv class="container">
     <div class="jumbotron">
         <h2>Flights</h2>
@@ -28,12 +27,17 @@
                         <td>@flight.FlightId</td>
                         <td>@flight.FlightCode</td>
                         <td>@flight.FlightName</td>
-                        <td>@TempData["TravelDate"]</td>
+                        @*<td>@flight.TravelDate</td>*@
+
                         <td>@flight.ArrivalTime</td>
+                        @*<td>@flight.ArrivalHrs:@flight.ArrivalMin:@flight.ArrivalSec @flight.ArrivalAmpm</td>*@
+
                         <td>@flight.DepartureTime</td>
+                        @*<td>@flight.DepartureHrs:@flight.DepartureMin:@flight.DepartureSec @flight.DepartureAmpm</td>*@
+
                         <td>@flight.Source</td>
                         <td>@flight.Destination</td>
-                        <td>@Html.ActionLink("View Full Details", "GetFlightDetails", new { id = @flight.FlightId }, new { @class = "btn btn-outline-primary" }) @Html.ActionLink("Update", "UpdateFlightDetails", new { id = @flight.FlightId }, new { @class = "btn btn-primary" }) @Html.ActionLink("Delete", "DeleteFlight", new { id = @flight.FlightId }, new { @class = "btn btn-danger" })</td>
+                        <td>@Html.ActionLink("View Full Details", "GetFlightDetails", new { id = @flight.FlightId}, new { @class = "btn btn-outline-primary" }) @Html.ActionLink("Update", "UpdateFlightDetails", new { id = @flight.FlightId }, new { @class = "btn btn-primary" }) @Html.ActionLink("Delete", "DeleteFlight", new { id = @flight.FlightId }, new { @class = "btn btn-danger" })</td>
                     </tr>
                 }
 

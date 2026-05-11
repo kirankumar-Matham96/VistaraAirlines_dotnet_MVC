@@ -96,8 +96,42 @@ namespace VistaraAirLinesApp.Controllers
         {
             try
             {
-                var flight = db.Flights.Where(f => f.IsDeleted == false).ToList();
-                return View(flight);
+                var flights = db.Flights.Where(f => f.IsDeleted == false).ToList();
+
+                /* Use the below code once the app is read. Make use of partial views to reuse the code */
+                //var flights = (
+                //    from f in db.Flights
+                //    join fi in db.FlightInventories
+                //    on f.FlightId equals fi.FlightId
+                //    where f.IsDeleted == false
+                //    select new FlightViewModel()
+                //    {
+                //        FlightCode = f.FlightCode,
+                //        FlightName = f.FlightName,
+                //        Source = f.Source,
+                //        Destination = f.Destination,
+
+                //        ArrivalHrs = f.ArrivalTime.Hours,
+                //        ArrivalMin = f.ArrivalTime.Minutes,
+                //        ArrivalSec = f.ArrivalTime.Seconds,
+                //        ArrivalAmpm = f.ArrivalTime.Hours > 12 ? "PM" : "AM",
+
+                //        DepartureHrs = f.DepartureTime.Hours,
+                //        DepartureMin = f.DepartureTime.Minutes,
+                //        DepartureSec = f.DepartureTime.Seconds,
+                //        DepartureAmpm = f.DepartureTime.Hours > 12 ? "PM" : "AM",
+
+                //        TravelDate = fi.TravelDate,
+                //        ExecutiveSeats = fi.ExecutiveSeats,
+                //        ExecutiveFare = fi.ExecutiveFare,
+                //        BusinessSeats = fi.BusinessSeats,
+                //        BusinessFare = fi.BusinessFare,
+                //        EconomySeats = fi.EconomySeats,
+                //        EconomyFare = fi.EconomyFare
+                //    }
+                //    );
+
+                return View(flights);
             }
             catch (Exception ex)
             {

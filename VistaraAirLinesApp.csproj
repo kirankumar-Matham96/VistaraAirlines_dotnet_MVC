@@ -168,6 +168,7 @@
     <Compile Include="Models\ViewModels\FlightSearchViewModel.cs" />
     <Compile Include="Models\ViewModels\FlightViewModel.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
+    <Compile Include="Models\ViewModels\PassengerViewModel.cs" />
     <Compile Include="Models\ViewModels\UserViewModel.cs" />
     <Compile Include="Models\VistaraAirLinesModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -263,6 +264,7 @@
     <Content Include="Views\Flight\UpdateFlightDetails.cshtml" />
     <Content Include="Views\Bookings\AddBooking.cshtml" />
     <Content Include="Views\Bookings\SearchFlights.cshtml" />
+    <Content Include="Views\Shared\_FlightsList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
