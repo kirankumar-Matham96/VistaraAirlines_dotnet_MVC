@@ -1,5 +1,12 @@
 USE VISTARA_DB;
 
+--DELETE FROM Flight;
+--DELETE FROM FlightInventory;
+--DELETE FROM Booking
+--DELETE FROM Users;
+--DELETE FROM PassengerDetails;
+--DELETE FROM Cancellation
+
 -- Users
 SELECT * FROM Users;
 
@@ -7,9 +14,6 @@ SELECT * FROM Users;
 SELECT * FROM Flight;
 -- FlightInventory
 SELECT * FROM FlightInventory;
-
---UPDATE Flight SET IsDeleted = 0;
-
 
 -- Bookings
 SELECT * FROM Booking;

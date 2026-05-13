@@ -76,7 +76,6 @@ CREATE TABLE Cancellation(
 	UNIQUE (BookingId)
 );
 
-DROP TABLE Users;
 
 CREATE TABLE Users(
 	UserId INT IDENTITY(1,1) PRIMARY KEY,

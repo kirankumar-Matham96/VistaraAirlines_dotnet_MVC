@@ -1,0 +1,22 @@
+﻿@model VistaraAirLinesApp.Models.ViewModels.BookingsViewModel
+
+@{
+    ViewBag.Title = "Checkout";
+}
+
+<div class="container">
+    <div class="card p-4">
+        <h2>Payment Checkout</h2>
+        <hr />
+        <p><strong>Flight ID:</strong> @Model.FlightId</p>
+        <p><strong>Travel Date:</strong> @Model.TravelDate.ToShortDateString()</p>
+        <p><strong>Passengers:</strong> @Model.PassengerList.Count</p>
+        <hr />
+        <h3>Total Amount: ₹@Model.TotalFare</h3>
+        <hr />
+        @using (Html.BeginForm("PaymentSuccess","Payments",FormMethod.Post))
+        {
+            <button type="submit" class="btn btn-success">Pay Now</button>
+        }
+    </div>
+</div>

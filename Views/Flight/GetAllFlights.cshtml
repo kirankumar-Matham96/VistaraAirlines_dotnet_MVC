@@ -7,6 +7,7 @@
     <div class="jumbotron">
         <h2>Flights</h2>
     </div>
+    @Html.ActionLink("Add Flight", "AddFlight", "Flight", new {@class="btn btn-outline-primary"})
     <div class="card">
         <div class="card-body">
             <table class="table align-baseline">
@@ -27,13 +28,13 @@
                         <td>@flight.FlightId</td>
                         <td>@flight.FlightCode</td>
                         <td>@flight.FlightName</td>
-                        @*<td>@flight.TravelDate</td>*@
+                        <td>@flight.TravelDate</td>
 
-                        <td>@flight.ArrivalTime</td>
-                        @*<td>@flight.ArrivalHrs:@flight.ArrivalMin:@flight.ArrivalSec @flight.ArrivalAmpm</td>*@
+                        @*<td>@flight.ArrivalTime</td>*@
+                        <td>@flight.ArrivalHrs:@flight.ArrivalMin:@flight.ArrivalSec @flight.ArrivalAmpm</td>
 
-                        <td>@flight.DepartureTime</td>
-                        @*<td>@flight.DepartureHrs:@flight.DepartureMin:@flight.DepartureSec @flight.DepartureAmpm</td>*@
+                        @*<td>@flight.DepartureTime</td>*@
+                        <td>@flight.DepartureHrs:@flight.DepartureMin:@flight.DepartureSec @flight.DepartureAmpm</td>
 
                         <td>@flight.Source</td>
                         <td>@flight.Destination</td>
