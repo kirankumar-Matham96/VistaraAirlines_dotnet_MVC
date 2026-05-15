@@ -45,14 +45,14 @@
         <hr />
         <p><strong>Passengers:</strong><span id="summary-passenger-count"></span></p>
         <p><strong>Base Fare:</strong> ₹<span id="summary-base-fare">0</span></p>
-        <p><strong>GST (@ViewBag.GST_PERCENT%):</strong> ₹<span id="summary-gst">0</span></p>
+        <p><strong>GST ((<span id="gst-percent-label"></span>%):</strong> ₹<span id="summary-gst">0</span></p>
         <hr />
         <h4>Total : ₹<span id="summary-total">0</span></h4>
     </div>
 
     <button type="button" class="btn btn-secondary" id="add-passenger-btn">➕ Add Passenger</button>
 
-    // HIDDEN TEMPLATE
+    <!-- HIDDEN TEMPLATE -->
     <script type="text/template" id="passenger-template">
         @{
             ViewBag.Index = "__index__";
@@ -81,12 +81,11 @@
         let passengerIndex = 1;
         updatePassengerTitles();
         updateBookingSummary();
+        $("#gst-percent-label").text(GST_PERCENT);
 
         $(document).on("change", "select", function () { updateBookingSummary(); });
 
-        //---------------------------------------
-        // ADD PASSENGER
-        //---------------------------------------
+        @*ADD PASSENGER*@
         $("#add-passenger-btn").click(function () {
             let template = $("#passenger-template").html();
             template = template.replace(/__index__/g, passengerIndex);
@@ -97,9 +96,7 @@
             updatePassengerTitles();
         });
 
-        //---------------------------------------
-        // REMOVE PASSENGER
-        //---------------------------------------
+        @*REMOVE PASSENGER*@
         $(document).on("click", ".remove-passenger-btn",
             function () {
                 if ($(".passenger-block").length > 1) {
@@ -116,9 +113,7 @@
                 updateBookingSummary();
             });
 
-        //---------------------------------------
-        // UPDATE PASSENGER TITLES
-        //---------------------------------------
+        @*UPDATE PASSENGER TITLES*@
         function updatePassengerTitles() {
             $(".passenger-block").each(function (index) {
                 $(this).find(".passenger-title").text("Passenger " + (index + 1));
@@ -127,16 +122,12 @@
 
         /***********/
         function updateBookingSummary() {
-            //------------------------------------
-            // GET FARES
-            //------------------------------------
+            @* GET FARES *@
             let economyFare = parseFloat($("#EconomyFare").val()) || 0;
             let businessFare = parseFloat($("#BusinessFare").val()) || 0;
             let executiveFare = parseFloat($("#ExecutiveFare").val()) || 0;
 
-            //------------------------------------
-            // CALCULATE
-            //------------------------------------
+            @*CALCULATE*@
             let passengerCount = 0;
             let baseFare = 0;
 
@@ -159,40 +150,28 @@
                 }
             });
 
-            //------------------------------------
-            // GST
-            //------------------------------------
-            let gstAmount = (baseFare * @ViewBag.GST_PERCENT) / 100;
+            @* GST *@
+            let gstAmount = (baseFare * GST_PERCENT) / 100;
 
-            //------------------------------------
-            // TOTAL
-            //------------------------------------
+
+            @* TOTAL *@
             let total = baseFare + gstAmount;
 
-            //------------------------------------
-            // UPDATE UI
-            //------------------------------------
+            @*UPDATE UI*@
             $("#summary-passenger-count").text(passengerCount);
             $("#summary-base-fare").text(baseFare.toFixed(2));
             $("#summary-gst").text(gstAmount.toFixed(2));
             $("#summary-total").text(total.toFixed(2));
         }
-        /***********/
 
-        //---------------------------------------
-        // REINDEX INPUT NAMES
-        //---------------------------------------
+        @* REINDEX INPUT NAMES *@
         function reIndexPassengers() {
             $(".passenger-block").each(function (newIndex) {
 
-                //-----------------------------------
-                // UPDATE INPUTS + SELECTS
-                //-----------------------------------
+                @* UPDATE INPUTS + SELECTS *@
                 $(this).find("input, select").each(function () {
 
-                    //-----------------------------------
-                    // UPDATE NAME
-                    //-----------------------------------
+                    @* UPDATE NAME *@
 
                     let currentName = $(this).attr("name");
 
@@ -200,9 +179,7 @@
                         let updatedName = currentName.replace(/PassengerList\[\d+\]/, "PassengerList[" + newIndex + "]");
                         $(this).attr("name", updatedName);
                     }
-                    //-----------------------------------
-                    // UPDATE ID
-                    //-----------------------------------
+                     @* UPDATE ID *@
                     let currentId = $(this).attr("id");
 
                     if (currentId) {

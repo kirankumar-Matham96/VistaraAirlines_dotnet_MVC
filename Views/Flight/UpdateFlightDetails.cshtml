@@ -5,20 +5,20 @@
 }
 
 <div>
-<h2>UpdateFlightDetails</h2>
+    <h2>UpdateFlightDetails</h2>
     @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "card p-5" }))
     {
-
         @Html.AntiForgeryToken()
         @Html.ValidationSummary()
 
-<div class="row mb-3">
-    @Html.Label("Flight Id")
-    <div class="col-md-9">
-        <input type="text" value="@TempData["flightId"]" readonly />
-    </div>
-</div>
-        
+        <div class="row mb-3">
+            @Html.LabelFor(model => model.FlightCode)
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.FlightId, new { AllowHtmlAttribute = new { @class = "form-control", @readonly = true} })
+                @Html.ValidationMessageFor(model => model.FlightCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
         <div class="row mb-3">
             @Html.LabelFor(model => model.FlightCode)
             <div class="col-md-9">
@@ -144,7 +144,7 @@
         <div class="row mb-3">
             <div class="col-md-9">
                 <button type="submit" class="btn btn-primary">Add Flight</button>
-                @Html.ActionLink("Cancel", "GetAllFlights", null, new {@class="btn btn-warning"})
+                @Html.ActionLink("Cancel", "GetAllFlights", null, new { @class = "btn btn-warning" })
             </div>
         </div>
     }

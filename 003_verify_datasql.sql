@@ -20,5 +20,7 @@ SELECT * FROM Booking;
 -- PassengerDetails
 SELECT * FROM PassengerDetails;
 
+SELECT * FROM Cancellation
+
 sp_help PassengerDetails;
 

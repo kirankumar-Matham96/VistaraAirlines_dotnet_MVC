@@ -1,7 +1,7 @@
 ﻿@using VistaraAirLinesApp.Models.ViewModels
 @{
     ViewBag.Title = "GetFlightDetails";
-    var flight = @TempData["flightData"] as FlightViewModel;
+    var flight = @Model as FlightViewModel;
 }
 
 
@@ -10,7 +10,7 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <P class="fw-semibold col-6">Flight Id: @TempData["flightId"]</P>
+                <P class="fw-semibold col-6">Flight Id: @flight.FlightId</P>
                 <p class="fw-semibold col-6">Flight Code: @flight.FlightCode</p>
                 <p class="fw-semibold col-6">Flight Name: @flight.FlightName</p>
                 <p class="fw-semibold col-6">Travel Date: @flight.TravelDate</p>

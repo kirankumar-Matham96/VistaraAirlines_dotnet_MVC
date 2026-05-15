@@ -191,6 +191,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BookingService.cs" />
+    <Compile Include="Services\FlightService.cs" />
     <Compile Include="Services\Interfaces\IBookingService.cs" />
     <Compile Include="Services\Interfaces\ICancellationService.cs" />
     <Compile Include="Services\Interfaces\IFlightService.cs" />
