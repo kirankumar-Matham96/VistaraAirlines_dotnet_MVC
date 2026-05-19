@@ -33,7 +33,8 @@ namespace VistaraAirLinesApp.Controllers
         {
             if (TempData["BookingData"] == null)
             {
-                return RedirectToAction("SearchFlights","Bookings");
+                return Content(TempData["BookingData"].ToString());
+                //return RedirectToAction("SearchFlights","Bookings");
             }
 
 

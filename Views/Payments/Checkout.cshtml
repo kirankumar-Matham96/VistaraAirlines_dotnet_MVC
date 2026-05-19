@@ -14,9 +14,10 @@
         <hr />
         <h3>Total Amount: ₹@Model.TotalFare</h3>
         <hr />
-        @using (Html.BeginForm("PaymentSuccess","Payments",FormMethod.Post))
+        @Html.ActionLink("Pay Now", "PaymentSuccess", "Payments", new { @class= "btn btn-primary" })
+        @*@using (Html.BeginForm("PaymentSuccess","Payments",FormMethod.Post))
         {
             <button type="submit" class="btn btn-success">Pay Now</button>
-        }
+        }*@
     </div>
 </div>

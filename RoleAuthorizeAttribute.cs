@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -19,7 +17,6 @@ namespace VistaraAirLinesApp.CustomFilters
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            //var role = httpContext.Session[_role];
             var role = SessionHelper.UserRole;
 
             if (role == null)
@@ -27,7 +24,7 @@ namespace VistaraAirLinesApp.CustomFilters
                 return false;
             }
 
-            return role.ToString() == _role;
+            return role.ToString().Equals(_role, StringComparison.OrdinalIgnoreCase); // to ignore case sensitivity
         }
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)

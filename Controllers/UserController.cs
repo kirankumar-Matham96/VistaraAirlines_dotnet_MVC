@@ -78,12 +78,11 @@ namespace VistaraAirLinesApp.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("UserId", "Invalid UserId");
+                        return RedirectToAction("Index", "Home");
                     }
-
-                    return RedirectToAction("Index", "Home");
                 }
-
+                
+                ModelState.AddModelError("UserId", "Invalid UserId");
                 return View(user);
             }
             catch (Exception ex)
