@@ -40,23 +40,27 @@ namespace VistaraAirLinesApp.Services
             }
         }
 
-        public void UserLogin(LoginViewModel user)
+        public User UserLogin(LoginViewModel user)
         {
             try
             {
                 var userExists = _db.Users.FirstOrDefault(u => (u.UserName == user.UserId || u.Email == user.UserId) && u.Role == user.Role);
 
-                if (userExists != null)
+                if (userExists == null)
                 {
-                    var passwordMatch = BCrypt.Net.BCrypt.Verify(user.Password, userExists.PasswordHash);
-
-                    if (!passwordMatch)
-                    {
-                        throw new Exception("Invalid Password");
-                    }
-
-                    // store user id, user name, and role in the session here...
+                    throw new Exception("User not found");
                 }
+
+                var passwordMatch = BCrypt.Net.BCrypt.Verify(user.Password, userExists.PasswordHash);
+
+                if (!passwordMatch)
+                {
+                    throw new Exception("Invalid Password");
+                }
+
+
+                // store user id, user name, and role in the session here...
+                return userExists;
             }
             catch
             {

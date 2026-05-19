@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using VistaraAirLinesApp.CustomFilters;
 using VistaraAirLinesApp.Models;
 using VistaraAirLinesApp.Models.ViewModels;
 using VistaraAirLinesApp.Services;
@@ -10,6 +11,7 @@ using VistaraAirLinesApp.Services.Interfaces;
 
 namespace VistaraAirLinesApp.Controllers
 {
+    [Authorize]
     public class FlightController : Controller
     {
         FlightService _service;
@@ -29,6 +31,7 @@ namespace VistaraAirLinesApp.Controllers
             TempData["SSRange"] = timeRange.SSRange;
         }
 
+        [RoleAuthorize("MANAGER")]
         public ActionResult AddFlight()
         {
             GetTimeRanges();
@@ -36,6 +39,7 @@ namespace VistaraAirLinesApp.Controllers
         }
 
         [HttpPost]
+        [RoleAuthorize("MANAGER")]
         public ActionResult AddFlight(FlightViewModel flight)
         {
             try
@@ -96,6 +100,7 @@ namespace VistaraAirLinesApp.Controllers
             }
         }
 
+        [RoleAuthorize("MANAGER")]
         public ActionResult UpdateFlightDetails(int id)
         {
             try
@@ -116,7 +121,9 @@ namespace VistaraAirLinesApp.Controllers
                 return View();
             }
         }
+
         [HttpPost]
+        [RoleAuthorize("MANAGER")]
         public ActionResult UpdateFlightDetails(FlightViewModel flight)
         {
             try
@@ -141,6 +148,7 @@ namespace VistaraAirLinesApp.Controllers
             }
         }
 
+        [RoleAuthorize("MANAGER")]
         public ActionResult DeleteFlight(int id)
         {
             try

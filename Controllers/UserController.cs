@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.Security;
 using VistaraAirLinesApp.Models;
 using VistaraAirLinesApp.Models.ViewModels;
 using VistaraAirLinesApp.Services;
@@ -39,24 +40,12 @@ namespace VistaraAirLinesApp.Controllers
             }
             catch (Exception ex)
             {
-
                 var inner = ex.InnerException;
                 while (inner.InnerException != null)
                 {
                     inner = inner.InnerException;
                     ModelState.AddModelError("", inner.Message);
                 }
-
-                //var sqlExpetion = ex.InnerException.InnerException as SqlException;
-                //if (sqlExpetion != null && sqlExpetion.Message.Contains("UQ_USER_EMAIL"))
-                //{
-                //    ModelState.AddModelError("Email", "Email already exists");
-                //}
-                //else
-                //{
-                //    ModelState.AddModelError("", "Something went wrong");
-                //}
-
                 return View(user);
             }
         }
@@ -74,9 +63,15 @@ namespace VistaraAirLinesApp.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    _service.UserLogin(user);
+                    var loggediUser = _service.UserLogin(user);
 
-                    if (user.Role == "MANAGER")
+                    Session["userid"] = loggediUser.UserId;
+                    Session["username"] = loggediUser.UserName;
+                    Session["userrole"] = loggediUser.Role;
+
+                    FormsAuthentication.SetAuthCookie(loggediUser.UserName, false);
+
+                    if (loggediUser.Role == "MANAGER")
                     {
                         return RedirectToAction("GetAllFlights", "Flight");
                     }
@@ -102,5 +97,14 @@ namespace VistaraAirLinesApp.Controllers
             }
         }
 
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            Session.Abandon();
+
+            FormsAuthentication.SignOut();
+
+            return RedirectToAction(nameof(LoginUser));
+        }
     }
 }

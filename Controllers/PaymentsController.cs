@@ -9,10 +9,9 @@ using VistaraAirLinesApp.Models.ViewModels;
 
 namespace VistaraAirLinesApp.Controllers
 {
+    [Authorize]
     public class PaymentsController : Controller
     {
-        VISTARA_DBEntities4 _db = new VISTARA_DBEntities4();
-
         // GET: Payments
         public ActionResult Checkout()
         {

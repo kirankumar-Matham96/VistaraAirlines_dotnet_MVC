@@ -21,6 +21,13 @@
                     <li>@Html.ActionLink("Register", "RegisterUser", "User", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Book A ticket", "SearchFlights", "Bookings", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
+                @if (Session["username"] != null) { 
+                <div>
+                    <p class="fw-semibold">Welcome @Session["username"]</p>
+                    @Html.ActionLink("Logout", "Logout", "User")
+                </div>
+
+                }
             </div>
         </div>
     </nav>
