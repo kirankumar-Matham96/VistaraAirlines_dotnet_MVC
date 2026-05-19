@@ -46,6 +46,7 @@ namespace VistaraAirLinesApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult SearchFlights(FlightSearchViewModel flightSearchViewModel)
         {
             try
@@ -82,6 +83,7 @@ namespace VistaraAirLinesApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddBooking(BookingsViewModel bookingViewModel)
         {
             try
@@ -182,6 +184,7 @@ namespace VistaraAirLinesApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult CancelBooking(CancellationViewModel cancellationViewModel)
         {
             try

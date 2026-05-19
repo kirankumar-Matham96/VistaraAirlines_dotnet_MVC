@@ -40,6 +40,7 @@ namespace VistaraAirLinesApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult PaymentSuccess()
         {
             try

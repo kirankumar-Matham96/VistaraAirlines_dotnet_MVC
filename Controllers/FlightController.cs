@@ -41,6 +41,7 @@ namespace VistaraAirLinesApp.Controllers
 
         [HttpPost]
         [RoleAuthorize("MANAGER")]
+        [ValidateAntiForgeryToken]
         public ActionResult AddFlight(FlightViewModel flight)
         {
             try
@@ -106,6 +107,7 @@ namespace VistaraAirLinesApp.Controllers
 
         [HttpPost]
         [RoleAuthorize("MANAGER")]
+        [ValidateAntiForgeryToken]
         public ActionResult UpdateFlightDetails(FlightViewModel flight)
         {
             try
