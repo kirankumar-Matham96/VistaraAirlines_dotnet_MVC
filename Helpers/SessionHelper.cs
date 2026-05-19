@@ -11,12 +11,12 @@ namespace VistaraAirLinesApp.Helpers
         {
             get
             {
-                return Convert.ToInt32(HttpContext.Current.Session["userid"]);
+                return Convert.ToInt32(HttpContext.Current.Session["userid"]?.ToString() ?? null);
             }
 
             set
             {
-                Convert.ToInt32(HttpContext.Current.Session["userid"] = value);
+                HttpContext.Current.Session["userid"] = value;
             }
         }
 
@@ -24,7 +24,7 @@ namespace VistaraAirLinesApp.Helpers
         {
             get
             {
-                return HttpContext.Current.Session["username"].ToString();
+                return HttpContext.Current?.Session["username"]?.ToString() ?? null;
             }
 
             set
@@ -37,7 +37,7 @@ namespace VistaraAirLinesApp.Helpers
         {
             get
             {
-                return HttpContext.Current.Session["userrole"].ToString();
+                return HttpContext.Current.Session["userrole"]?.ToString() ?? null;
             }
 
             set
