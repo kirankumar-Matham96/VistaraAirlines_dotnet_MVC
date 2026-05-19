@@ -9,7 +9,7 @@ using VistaraAirLinesApp.Services.Interfaces;
 
 namespace VistaraAirLinesApp.Services
 {
-    public class BookingService : IBookingService
+    public class BookingService : IBookingService,ICancellationService
     {
         private readonly VISTARA_DBEntities4 _db;
         private readonly decimal GST_PERCENT = 10;

@@ -4,16 +4,17 @@ using System.Linq;
 using System.Web.Mvc;
 using VistaraAirLinesApp.Models;
 using VistaraAirLinesApp.Models.ViewModels;
+using VistaraAirLinesApp.Services;
 
 namespace VistaraAirLinesApp.Controllers
 {
     public class UserController : Controller
     {
-        VISTARA_DBEntities4 db;
+        UserService _service;
 
         public UserController()
         {
-            db = new VISTARA_DBEntities4();
+            _service = new UserService();
         }
 
         // GET: User
@@ -30,33 +31,31 @@ namespace VistaraAirLinesApp.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var newUser = new User();
-
-                    newUser.FullName = $"{user.Firstname} {user.Lastname}";
-                    newUser.UserName = user.UserName;
-                    newUser.Email = user.Email;
-                    newUser.Role = user.Role;
-                    newUser.PasswordHash = BCrypt.Net.BCrypt.HashPassword(user.Password, workFactor: 12);
-                    newUser.CreatedAt = DateTime.Now;
-                    newUser.UpdatedAt = DateTime.Now;
-
-                    db.Users.Add(newUser);
-                    db.SaveChanges();
-
+                    _service.AddUser(user);
                     return RedirectToAction("LoginUser");
                 }
 
                 return View(user);
             }
-            catch (Exception ex) {
-                var sqlExpetion = ex.InnerException.InnerException as System.Data.SqlClient.SqlException;
-                if (sqlExpetion != null && sqlExpetion.Message.Contains("UQ_USER_EMAIL"))
+            catch (Exception ex)
+            {
+
+                var inner = ex.InnerException;
+                while (inner.InnerException != null)
                 {
-                    ModelState.AddModelError("Email", "Email already exists");
+                    inner = inner.InnerException;
+                    ModelState.AddModelError("", inner.Message);
                 }
-                else { 
-                    ModelState.AddModelError("", "Something went wrong");
-                }
+
+                //var sqlExpetion = ex.InnerException.InnerException as SqlException;
+                //if (sqlExpetion != null && sqlExpetion.Message.Contains("UQ_USER_EMAIL"))
+                //{
+                //    ModelState.AddModelError("Email", "Email already exists");
+                //}
+                //else
+                //{
+                //    ModelState.AddModelError("", "Something went wrong");
+                //}
 
                 return View(user);
             }
@@ -71,37 +70,34 @@ namespace VistaraAirLinesApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LoginUser(LoginViewModel user)
         {
-            try {
+            try
+            {
                 if (ModelState.IsValid)
                 {
-                    var userExists = db.Users.FirstOrDefault(u => (u.UserName == user.UserId || u.Email == user.UserId) && u.Role == user.Role);
+                    _service.UserLogin(user);
 
-                    if (userExists != null)
+                    if (user.Role == "MANAGER")
                     {
-                        var passwordMatch = BCrypt.Net.BCrypt.Verify(user.Password, userExists.PasswordHash);
-
-                        if (!passwordMatch) {
-                            ModelState.AddModelError("Password", "Invalid Password");
-                            return View(user);
-                        }
-
-                        // store user id, user name, and role in the session here...
-
-                        if (user.Role == "MANAGER") { 
-                            return RedirectToAction("GetAllFlights", "Flight"); 
-                        }
-
-                        return RedirectToAction("Index", "Home");
-
+                        return RedirectToAction("GetAllFlights", "Flight");
                     }
-                    else {
+                    else
+                    {
                         ModelState.AddModelError("UserId", "Invalid UserId");
                     }
+
+                    return RedirectToAction("Index", "Home");
                 }
 
                 return View(user);
-            } catch (SqlException ex) {
-                ModelState.AddModelError("", ex.Message);
+            }
+            catch (Exception ex)
+            {
+                var inner = ex;
+                while (inner.InnerException != null)
+                {
+                    inner = inner.InnerException;
+                }
+                ModelState.AddModelError("", inner.Message);
                 return View(user);
             }
         }

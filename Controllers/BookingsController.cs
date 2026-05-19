@@ -21,6 +21,7 @@ namespace VistaraAirLinesApp.Controllers
     public class BookingsController : Controller
     {
         IBookingService _bookingService;
+        ICancellationService _cancellationService;
 
         public BookingsController()
         {
@@ -135,7 +136,7 @@ namespace VistaraAirLinesApp.Controllers
         {
             try
             {
-                var cancellationViewModel = _bookingService.GetCancellationData(id);
+                var cancellationViewModel = _cancellationService.GetCancellationData(id);
 
                 if (cancellationViewModel == null)
                 {
@@ -155,8 +156,7 @@ namespace VistaraAirLinesApp.Controllers
         {
             try
             {
-                _bookingService.CancelBooking(cancellationViewModel);
-
+                _cancellationService.CancelBooking(cancellationViewModel);
                 return RedirectToAction(nameof(BookingHistory));
             }
             catch (Exception ex)

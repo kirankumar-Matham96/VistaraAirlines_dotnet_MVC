@@ -8,5 +8,6 @@ namespace VistaraAirLinesApp.Services.Interfaces
 {
     internal interface IPaymentService
     {
+        // implement when the payment gate way is included.
     }
 }

@@ -20,7 +20,5 @@ namespace VistaraAirLinesApp.Services.Interfaces
         void ConfirmBooking(BookingsViewModel bookingsViewModel);
         TicketViewModel GetBookingDetails(int bookingId);
         void RestoreSeats(int bookingId);
-        void CancelBooking(CancellationViewModel cancellationViewModel);
-        CancellationViewModel GetCancellationData(int bookingId);
     }
 }
