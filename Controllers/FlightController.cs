@@ -12,12 +12,10 @@ namespace VistaraAirLinesApp.Controllers
 {
     public class FlightController : Controller
     {
-        //VISTARA_DBEntities4 db;
         FlightService _service;
 
         public FlightController()
         {
-            //db = new VISTARA_DBEntities4();
             _service = new FlightService();
         }
 
@@ -53,7 +51,14 @@ namespace VistaraAirLinesApp.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", ex.Message);
+                Exception innerEx = ex;
+                
+                while (innerEx.InnerException != null)
+                {
+                    innerEx = innerEx.InnerException;
+                }
+
+                ModelState.AddModelError("", innerEx.Message);
                 return View(flight);
             }
         }
@@ -67,7 +72,13 @@ namespace VistaraAirLinesApp.Controllers
             }
             catch (Exception ex)
             {
-                return Content(ex.Message);
+                Exception innerEx = ex;
+
+                while (innerEx.InnerException != null)
+                {
+                    innerEx = innerEx.InnerException;
+                }
+                return Content(innerEx.Message);
             }
         }
 
@@ -95,7 +106,13 @@ namespace VistaraAirLinesApp.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", ex.Message);
+                Exception innerEx = ex;
+
+                while (innerEx.InnerException != null)
+                {
+                    innerEx = innerEx.InnerException;
+                }
+                ModelState.AddModelError("", innerEx.Message);
                 return View();
             }
         }
@@ -113,7 +130,13 @@ namespace VistaraAirLinesApp.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", ex.Message);
+                Exception innerEx = ex;
+
+                while (innerEx.InnerException != null)
+                {
+                    innerEx = innerEx.InnerException;
+                }
+                ModelState.AddModelError("", innerEx.Message);
                 return View();
             }
         }
@@ -127,8 +150,13 @@ namespace VistaraAirLinesApp.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", ex.Message);
-                return View();
+                Exception innerEx = ex;
+
+                while (innerEx.InnerException != null)
+                {
+                    innerEx = innerEx.InnerException;
+                }
+                return Content( innerEx.Message);
             }
         }
 

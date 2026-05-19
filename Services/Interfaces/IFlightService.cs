@@ -17,7 +17,6 @@ namespace VistaraAirLinesApp.Services.Interfaces
         FlightInventory GetFlightInventoryById(int id);
         List<FlightViewModel> GetAllFlights();
         FlightViewModel GetFullFlightDetails(int id);
-        //ActionResult GetFlightDetails(int id); // removed
         void UpdateFlightDetails(FlightViewModel flight);
         void DeleteFlight(int id);
     }
