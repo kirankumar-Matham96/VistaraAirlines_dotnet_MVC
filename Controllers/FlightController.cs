@@ -12,7 +12,7 @@ using VistaraAirLinesApp.Services.Interfaces;
 namespace VistaraAirLinesApp.Controllers
 {
     [Authorize]
-    public class FlightController : Controller
+    public class FlightController : BaseController
     {
         FlightService _service;
 

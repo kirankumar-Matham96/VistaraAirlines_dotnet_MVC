@@ -19,7 +19,7 @@ using VistaraAirLinesApp.Services;
 namespace VistaraAirLinesApp.Controllers
 {
     [Authorize]
-    public class BookingsController : Controller
+    public class BookingsController : BaseController
     {
         IBookingService _bookingService;
         ICancellationService _cancellationService;

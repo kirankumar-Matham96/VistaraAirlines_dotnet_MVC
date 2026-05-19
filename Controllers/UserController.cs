@@ -9,7 +9,7 @@ using VistaraAirLinesApp.Services;
 
 namespace VistaraAirLinesApp.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         UserService _service;
 

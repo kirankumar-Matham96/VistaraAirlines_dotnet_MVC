@@ -10,7 +10,7 @@ using VistaraAirLinesApp.Models.ViewModels;
 namespace VistaraAirLinesApp.Controllers
 {
     [Authorize]
-    public class PaymentsController : Controller
+    public class PaymentsController : BaseController
     {
         // GET: Payments
         public ActionResult Checkout()
