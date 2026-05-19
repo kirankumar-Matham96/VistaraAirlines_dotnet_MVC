@@ -148,6 +148,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\SessionHelper.cs" />
     <Compile Include="Models\Booking.cs">
       <DependentUpon>VistaraAirLinesModel.tt</DependentUpon>
     </Compile>

@@ -14,6 +14,12 @@ namespace VistaraAirLinesApp.Models
     
     public partial class User
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            this.Bookings = new HashSet<Booking>();
+        }
+    
         public int UserId { get; set; }
         public string FullName { get; set; }
         public string UserName { get; set; }
@@ -22,5 +28,8 @@ namespace VistaraAirLinesApp.Models
         public string Role { get; set; }
         public Nullable<System.DateTime> CreatedAt { get; set; }
         public Nullable<System.DateTime> UpdatedAt { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Booking> Bookings { get; set; }
     }
 }

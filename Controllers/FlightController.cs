@@ -14,7 +14,7 @@ namespace VistaraAirLinesApp.Controllers
     [Authorize]
     public class FlightController : BaseController
     {
-        FlightService _service;
+        IFlightService _service;
 
         public FlightController()
         {
@@ -56,7 +56,7 @@ namespace VistaraAirLinesApp.Controllers
             catch (Exception ex)
             {
                 Exception innerEx = ex;
-                
+
                 while (innerEx.InnerException != null)
                 {
                     innerEx = innerEx.InnerException;
@@ -164,7 +164,7 @@ namespace VistaraAirLinesApp.Controllers
                 {
                     innerEx = innerEx.InnerException;
                 }
-                return Content( innerEx.Message);
+                return Content(innerEx.Message);
             }
         }
 

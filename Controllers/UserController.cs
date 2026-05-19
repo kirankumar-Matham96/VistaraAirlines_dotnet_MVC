@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
+using VistaraAirLinesApp.Helpers;
 using VistaraAirLinesApp.Models;
 using VistaraAirLinesApp.Models.ViewModels;
 using VistaraAirLinesApp.Services;
@@ -11,7 +12,7 @@ namespace VistaraAirLinesApp.Controllers
 {
     public class UserController : BaseController
     {
-        UserService _service;
+        private readonly UserService _service;
 
         public UserController()
         {
@@ -65,9 +66,9 @@ namespace VistaraAirLinesApp.Controllers
                 {
                     var loggediUser = _service.UserLogin(user);
 
-                    Session["userid"] = loggediUser.UserId;
-                    Session["username"] = loggediUser.UserName;
-                    Session["userrole"] = loggediUser.Role;
+                    SessionHelper.UserId = loggediUser.UserId;
+                    SessionHelper.UserName = loggediUser.UserName;
+                    SessionHelper.UserRole = loggediUser.Role;
 
                     FormsAuthentication.SetAuthCookie(loggediUser.UserName, false);
 

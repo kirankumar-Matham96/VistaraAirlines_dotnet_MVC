@@ -12,7 +12,7 @@ namespace VistaraAirLinesApp.Services.Interfaces
         FlightSearchViewModel SearchFlights(FlightSearchViewModel flightSearchViewModel);
         FlightSearchViewModel GetSearchFlightPageData();
         BookingsViewModel GetBookingPageData(int flightId);
-        List<BookingHistoryViewModel> GetBookingHistory();
+        List<BookingHistoryViewModel> GetBookingHistory(int id);
         BookingsViewModel AddBooking(BookingsViewModel bookingViewModel);
         decimal CalculateTotalFare(BookingsViewModel bookingVM);
         bool ValidateSeatAvailability(BookingsViewModel bookingVM, out string message);

@@ -478,18 +478,19 @@ namespace VistaraAirLinesApp.Services
             }
         }
 
-        public List<BookingHistoryViewModel> GetBookingHistory()
+        public List<BookingHistoryViewModel> GetBookingHistory(int id)
         {
             var bookings =
                 (
                     from b in _db.Bookings
                     join f in _db.Flights
                     on b.FlightId equals f.FlightId
-                    where b.IsDeleted == false
+                    where b.IsDeleted == false && b.UserId == id
 
                     select new BookingHistoryViewModel()
                     {
                         BookingId = b.BookingId,
+                        UserId = b.UserId,
                         FlightId = b.FlightId,
                         FlightCode = f.FlightCode,
                         FlightName = f.FlightName,

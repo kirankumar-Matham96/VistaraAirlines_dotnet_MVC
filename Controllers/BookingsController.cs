@@ -15,6 +15,7 @@ using VistaraAirLinesApp.Models;
 using VistaraAirLinesApp.Models.ViewModels;
 using VistaraAirLinesApp.Services.Interfaces;
 using VistaraAirLinesApp.Services;
+using VistaraAirLinesApp.Helpers;
 
 namespace VistaraAirLinesApp.Controllers
 {
@@ -115,7 +116,7 @@ namespace VistaraAirLinesApp.Controllers
         // Booking history
         public ActionResult BookingHistory()
         {
-            var bookings = _bookingService.GetBookingHistory();
+            List<BookingHistoryViewModel> bookings = _bookingService.GetBookingHistory(SessionHelper.UserId);
             return View(bookings);
         }
 

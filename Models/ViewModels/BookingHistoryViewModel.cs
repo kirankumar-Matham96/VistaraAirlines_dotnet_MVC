@@ -8,6 +8,7 @@ namespace VistaraAirLinesApp.Models.ViewModels
     public class BookingHistoryViewModel
     {
         public int BookingId { get; set; }
+        public int UserId { get; set; }
 
         public int FlightId { get; set; }
 
