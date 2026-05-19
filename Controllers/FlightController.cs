@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using VistaraAirLinesApp.CustomFilters;
+using VistaraAirLinesApp.Helpers;
 using VistaraAirLinesApp.Models;
 using VistaraAirLinesApp.Models.ViewModels;
 using VistaraAirLinesApp.Services;
@@ -55,14 +56,7 @@ namespace VistaraAirLinesApp.Controllers
             }
             catch (Exception ex)
             {
-                Exception innerEx = ex;
-
-                while (innerEx.InnerException != null)
-                {
-                    innerEx = innerEx.InnerException;
-                }
-
-                ModelState.AddModelError("", innerEx.Message);
+                ModelState.AddModelError("", ExceptionHelper.GetExceptionMessage(ex));
                 return View(flight);
             }
         }
@@ -76,13 +70,7 @@ namespace VistaraAirLinesApp.Controllers
             }
             catch (Exception ex)
             {
-                Exception innerEx = ex;
-
-                while (innerEx.InnerException != null)
-                {
-                    innerEx = innerEx.InnerException;
-                }
-                return Content(innerEx.Message);
+                return Content(ExceptionHelper.GetExceptionMessage(ex));
             }
         }
 
@@ -95,7 +83,7 @@ namespace VistaraAirLinesApp.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", ex.Message);
+                ModelState.AddModelError("", ExceptionHelper.GetExceptionMessage(ex));
                 return View();
             }
         }
@@ -111,13 +99,7 @@ namespace VistaraAirLinesApp.Controllers
             }
             catch (Exception ex)
             {
-                Exception innerEx = ex;
-
-                while (innerEx.InnerException != null)
-                {
-                    innerEx = innerEx.InnerException;
-                }
-                ModelState.AddModelError("", innerEx.Message);
+                ModelState.AddModelError("", ExceptionHelper.GetExceptionMessage(ex));
                 return View();
             }
         }
@@ -137,13 +119,7 @@ namespace VistaraAirLinesApp.Controllers
             }
             catch (Exception ex)
             {
-                Exception innerEx = ex;
-
-                while (innerEx.InnerException != null)
-                {
-                    innerEx = innerEx.InnerException;
-                }
-                ModelState.AddModelError("", innerEx.Message);
+                ModelState.AddModelError("", ExceptionHelper.GetExceptionMessage(ex));
                 return View();
             }
         }
@@ -158,13 +134,7 @@ namespace VistaraAirLinesApp.Controllers
             }
             catch (Exception ex)
             {
-                Exception innerEx = ex;
-
-                while (innerEx.InnerException != null)
-                {
-                    innerEx = innerEx.InnerException;
-                }
-                return Content(innerEx.Message);
+                return Content(ExceptionHelper.GetExceptionMessage(ex));
             }
         }
 

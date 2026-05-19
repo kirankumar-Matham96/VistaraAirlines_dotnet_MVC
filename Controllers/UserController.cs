@@ -41,12 +41,7 @@ namespace VistaraAirLinesApp.Controllers
             }
             catch (Exception ex)
             {
-                var inner = ex.InnerException;
-                while (inner.InnerException != null)
-                {
-                    inner = inner.InnerException;
-                    ModelState.AddModelError("", inner.Message);
-                }
+                ModelState.AddModelError("", ExceptionHelper.GetExceptionMessage(ex));
                 return View(user);
             }
         }
@@ -87,12 +82,7 @@ namespace VistaraAirLinesApp.Controllers
             }
             catch (Exception ex)
             {
-                var inner = ex;
-                while (inner.InnerException != null)
-                {
-                    inner = inner.InnerException;
-                }
-                ModelState.AddModelError("", inner.Message);
+                ModelState.AddModelError("", ExceptionHelper.GetExceptionMessage(ex));
                 return View(user);
             }
         }

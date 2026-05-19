@@ -33,29 +33,52 @@ namespace VistaraAirLinesApp.Controllers
         //Search available flights(get flights with filter)
         public ActionResult SearchFlights()
         {
-            var flightSearchViewModel = _bookingService.GetSearchFlightPageData();
+            try
+            {
+                var flightSearchViewModel = _bookingService.GetSearchFlightPageData();
+                return View(flightSearchViewModel);
 
-            return View(flightSearchViewModel);
+            }
+            catch (Exception ex)
+            {
+                return Content(ExceptionHelper.GetExceptionMessage(ex));
+            }
         }
 
         [HttpPost]
         public ActionResult SearchFlights(FlightSearchViewModel flightSearchViewModel)
         {
-            var flights = _bookingService.SearchFlights(flightSearchViewModel);
-
-            return View(flights);
+            try
+            {
+                var flights = _bookingService.SearchFlights(flightSearchViewModel);
+                return View(flights);
+            }
+            catch (Exception ex)
+            {
+                return Content(ExceptionHelper.GetExceptionMessage(ex));
+            }
         }
 
         public ActionResult AddBooking(int id)
         {
-            var bookingVM = _bookingService.GetBookingPageData(id);
-
-            if (bookingVM == null)
+            try
             {
-                return HttpNotFound();
-            }
+                var flightSearchViewModel = _bookingService.GetSearchFlightPageData();
+                return View(flightSearchViewModel);
 
-            return View(bookingVM);
+                var bookingVM = _bookingService.GetBookingPageData(id);
+
+                if (bookingVM == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(bookingVM);
+            }
+            catch (Exception ex)
+            {
+                return Content(ExceptionHelper.GetExceptionMessage(ex));
+            }
         }
 
         [HttpPost]
@@ -77,19 +100,9 @@ namespace VistaraAirLinesApp.Controllers
             }
             catch (Exception ex)
             {
-                Exception inner = ex;
-
-                while (inner.InnerException != null)
-                {
-                    inner = inner.InnerException;
-                }
-
-                ModelState.AddModelError("", inner.Message);
-
+                ModelState.AddModelError("", ExceptionHelper.GetExceptionMessage(ex));
                 return View(bookingViewModel);
             }
-
-
         }
 
         //Booking Confirmation after payment success
@@ -108,7 +121,7 @@ namespace VistaraAirLinesApp.Controllers
             }
             catch (Exception ex)
             {
-                return Content(ex.Message);
+                return Content(ExceptionHelper.GetExceptionMessage(ex));
             }
         }
 
@@ -116,21 +129,36 @@ namespace VistaraAirLinesApp.Controllers
         // Booking history
         public ActionResult BookingHistory()
         {
-            List<BookingHistoryViewModel> bookings = _bookingService.GetBookingHistory(SessionHelper.UserId);
-            return View(bookings);
+            try
+            {
+                List<BookingHistoryViewModel> bookings = _bookingService.GetBookingHistory(SessionHelper.UserId);
+                return View(bookings);
+            }
+            catch (Exception ex)
+            {
+                return Content(ExceptionHelper.GetExceptionMessage(ex));
+            }
         }
 
         //View booking details
         public ActionResult BookingDetails(int id)
         {
-            var ticketViewModel = _bookingService.GetBookingDetails(id);
 
-            if (ticketViewModel == null)
+            try
             {
-                return HttpNotFound();
-            }
+                var ticketViewModel = _bookingService.GetBookingDetails(id);
 
-            return View(ticketViewModel);
+                if (ticketViewModel == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(ticketViewModel);
+            }
+            catch (Exception ex)
+            {
+                return Content(ExceptionHelper.GetExceptionMessage(ex));
+            }
         }
 
         //CancellationController
@@ -149,7 +177,7 @@ namespace VistaraAirLinesApp.Controllers
             }
             catch (Exception ex)
             {
-                return Content(ex.Message);
+                return Content(ExceptionHelper.GetExceptionMessage(ex));
             }
         }
 
@@ -163,8 +191,7 @@ namespace VistaraAirLinesApp.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", ex.Message);
-
+                ModelState.AddModelError("", ExceptionHelper.GetExceptionMessage(ex));
                 return View(cancellationViewModel);
             }
         }
