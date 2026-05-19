@@ -11,7 +11,7 @@ namespace VistaraAirLinesApp.Helpers
         {
             get
             {
-                return Convert.ToInt32(HttpContext.Current.Session["userid"]?.ToString() ?? null);
+                return HttpContext.Current.Session["userid"] as int? ?? -1;
             }
 
             set
@@ -24,7 +24,7 @@ namespace VistaraAirLinesApp.Helpers
         {
             get
             {
-                return HttpContext.Current?.Session["username"]?.ToString() ?? null;
+                return HttpContext.Current.Session["username"]?.ToString() ?? null;
             }
 
             set
